@@ -14,13 +14,27 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test": "run-script-os",
+    "test:win32:msys": "set CI=true react-scripts test --transformIgnorePatterns \"node_modules/(?!(react))/\"",
+    "test:darwin:linux": "CI=true react-scripts test --transformIgnorePatterns \"node_modules/(?!(react))/\"",
+    "test:default": "CI=true react-scripts test --transformIgnorePatterns \"node_modules/(?!(react))/\"",
+    "eject": "react-scripts eject",
+    "lint": "eslint \"**/*.{js,jsx}\"",
+    "lint-fix": "eslint --fix \"**/*.{js,jsx}\"",
+    "format": "npm run lint-fix && prettier --write \"**/*.+(json|css|md)\""
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "npm run format"
+    }
+  },
+  "lint-staged": {
+    "*.+(js|jsx)": [
+      "eslint --fix"
+    ],
+    "*.+(json|css|md)": [
+      "prettier --write"
     ]
   },
   "browserslist": {
@@ -34,5 +48,17 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.21.5",
+    "husky": "^4.3.0",
+    "lint-staged": "^10.5.1",
+    "prettier": "^2.2.0",
+    "run-script-os": "^1.1.3"
   }
 }
