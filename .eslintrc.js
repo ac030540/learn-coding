@@ -4,6 +4,7 @@ module.exports = {
   plugins: ['react'],
   rules: {
     'prettier/prettier': 'error',
+    'react/jsx-props-no-spreading': [0],
     'react/react-in-jsx-scope': [0],
     'react/prop-types': [2],
     'react/forbid-prop-types': [2, { forbid: [] }],
