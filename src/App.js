@@ -1,16 +1,22 @@
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Login from './components/login/Login';
+import { StoreProvider } from 'easy-peasy';
+import store from './store';
+import SignIn from './components/SignIn/SignIn';
 import './App.css';
+import CustomAppBar from './components/common/AppBar';
 
 function App() {
   return (
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
-      <Switch>
-        <Route exact path="/login">
-          <Login />
-        </Route>
-      </Switch>
-    </BrowserRouter>
+    <StoreProvider store={store}>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
+        <CustomAppBar />
+        <Switch>
+          <Route exact path="/signin">
+            <SignIn />
+          </Route>
+        </Switch>
+      </BrowserRouter>
+    </StoreProvider>
   );
 }
 
