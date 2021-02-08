@@ -75,6 +75,11 @@ const CustomAppBar = () => {
     setAnchorEl(null);
   };
 
+  const handleMenuItemClick = (path) => {
+    handleClose();
+    history.push(path);
+  };
+
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -111,8 +116,8 @@ const CustomAppBar = () => {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={() => handleMenuItemClick('/profile')}>Profile</MenuItem>
+                <MenuItem onClick={() => handleMenuItemClick('/settings')}>Settings</MenuItem>
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
               </Menu>
             </div>
