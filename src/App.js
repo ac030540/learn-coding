@@ -12,7 +12,8 @@ import { auth as firebaseAuth } from './firebase.config';
 const App = () => {
   const setAuth = useStoreActions((actions) => actions.setAuth);
   const auth = useStoreState((state) => state.auth);
-  // updating the global auth state
+
+  // initialising the global auth state
   useEffect(() => {
     firebaseAuth.onAuthStateChanged((user) => {
       let uid = null;
@@ -35,6 +36,9 @@ const App = () => {
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       <CustomAppBar />
       <Switch>
+        <Route exact path="/verify">
+          <SignIn />
+        </Route>
         <Route exact path="/signin">
           <SignIn />
         </Route>
@@ -44,6 +48,7 @@ const App = () => {
         <Route exact path="/reset">
           <ResetPassword />
         </Route>
+        )
       </Switch>
       <CustomSnackbar />
     </BrowserRouter>

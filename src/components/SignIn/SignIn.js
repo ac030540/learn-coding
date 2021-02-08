@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -38,11 +39,10 @@ const SignIn = () => {
   const classes = useStyles();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const snackbarStates = useStoreState((state) => state.snackbarStates);
   const auth = useStoreState((state) => state.auth);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-  const setSnackbarOpen = useStoreActions((actions) => actions.setSnackbarOpen);
+  const history = useHistory();
   const setAuth = useStoreActions((actions) => actions.setAuth);
   const setSnackbarStates = useStoreActions((actions) => actions.setSnackbarStates);
 
@@ -56,11 +56,7 @@ const SignIn = () => {
 
   const updateSnackbar = (message, severity) => {
     setSnackbarStates({
-      ...snackbarStates,
       open: true,
-      handleSnackbarClose: () => {
-        setSnackbarOpen(false);
-      },
       severity,
       message,
     });
@@ -79,6 +75,9 @@ const SignIn = () => {
           email,
           emailVerified,
         });
+        updateSnackbar('Successfully logged in', 'success');
+        setLoading(false);
+        history.push('/profile');
       })
       .catch(() => {
         setError(true);
@@ -88,10 +87,6 @@ const SignIn = () => {
   };
 
   const handleSignIn = () => {
-    // setting up the authentication details
-    // setAuth(true);
-    // // updating the states of the global snackbar
-    // updateSnackbar('Logged In', 'success');
     signInWithFirebaseAuth();
   };
 

@@ -58,6 +58,7 @@ const CustomAppBar = () => {
           severity: 'success',
           message: 'Successfully signed out',
         });
+        history.push('/signin');
       })
       .catch(() => {
         setSnackbarStates({
