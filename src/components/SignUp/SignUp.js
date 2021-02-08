@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -30,8 +30,26 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignUp() {
+const SignUp = () => {
   const classes = useStyles();
+  const [userDetails, setUserDetails] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+  });
+
+  const onChangeHandler = (event) => {
+    const { currentTarget, target } = event;
+    const { value } = target;
+    if (currentTarget.name === 'email') setUserDetails((user) => ({ ...user, email: value }));
+    else if (currentTarget.name === 'password')
+      setUserDetails((user) => ({ ...user, password: value }));
+    else if (currentTarget.name === 'firstName')
+      setUserDetails((user) => ({ ...user, firstName: value }));
+    else if (currentTarget.name === 'lastName')
+      setUserDetails((user) => ({ ...user, lastName: value }));
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -54,7 +72,9 @@ export default function SignUp() {
                 fullWidth
                 id="firstName"
                 label="First Name"
+                value={userDetails.firstName}
                 autoFocus
+                onChange={onChangeHandler}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -65,7 +85,9 @@ export default function SignUp() {
                 id="lastName"
                 label="Last Name"
                 name="lastName"
+                value={userDetails.lastName}
                 autoComplete="lname"
+                onChange={onChangeHandler}
               />
             </Grid>
             <Grid item xs={12}>
@@ -76,7 +98,9 @@ export default function SignUp() {
                 id="email"
                 label="Email Address"
                 name="email"
+                value={userDetails.email}
                 autoComplete="email"
+                onChange={onChangeHandler}
               />
             </Grid>
             <Grid item xs={12}>
@@ -88,6 +112,8 @@ export default function SignUp() {
                 label="Password"
                 type="password"
                 id="password"
+                onChange={onChangeHandler}
+                value={userDetails.password}
                 autoComplete="current-password"
               />
             </Grid>
@@ -112,4 +138,6 @@ export default function SignUp() {
       </div>
     </Container>
   );
-}
+};
+
+export default SignUp;
