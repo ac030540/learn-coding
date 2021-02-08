@@ -7,6 +7,7 @@ import CustomSnackbar from './components/common/Snackbar';
 import ResetPassword from './components/Reset/ResetPassword';
 import './App.css';
 import SignUp from './components/SignUp/SignUp';
+import Verify from './components/Verify/Verify';
 import { auth as firebaseAuth } from './firebase.config';
 
 const App = () => {
@@ -37,7 +38,7 @@ const App = () => {
       <CustomAppBar />
       <Switch>
         <Route exact path="/verify">
-          <SignIn />
+          <Verify />
         </Route>
         <Route exact path="/signin">
           <SignIn />

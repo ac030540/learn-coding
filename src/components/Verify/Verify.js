@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import VpnKeyOutlinedIcon from '@material-ui/icons/VpnKeyOutlined';
+import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -29,25 +27,31 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
   },
   resetText: {
-    margin: theme.spacing(1),
+    margin: theme.spacing(0),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
 }));
 
-const ResetPassword = () => {
+const Verify = () => {
   const classes = useStyles();
-  const [email, setEmail] = useState('');
   const setSnackbarStates = useStoreActions((actions) => actions.setSnackbarStates);
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(false);
 
-  const handleResetPassword = () => {
+  useEffect(() => {
+    const user = firebaseAuth.currentUser;
+    if (user) user.sendEmailVerification();
+  }, []);
+
+  const handleVerify = () => {
     setLoading(true);
     setDisabled(true);
-    firebaseAuth
-      .sendPasswordResetEmail(email)
+    const user = firebaseAuth.currentUser;
+
+    user
+      .sendEmailVerification()
       .then(() => {
         setSnackbarStates({
           open: true,
@@ -61,7 +65,7 @@ const ResetPassword = () => {
         setSnackbarStates({
           open: true,
           severity: 'error',
-          message: 'Error sending the email',
+          message: 'Error sending the email. We may have already sent you the email.',
         });
         setLoading(false);
       });
@@ -72,52 +76,35 @@ const ResetPassword = () => {
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
-          <VpnKeyOutlinedIcon />
+          <MailOutlineIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Reset Password
+          Email Verification
         </Typography>
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                value={email}
-                autoComplete="email"
-                onChange={(event) => setEmail(event.target.value)}
-              />
+              <Typography component="h1" variant="body2" className={classes.resetText}>
+                We have sent you an email verification link on your registered email address. Please
+                verify your email address to access our services.
+              </Typography>
             </Grid>
           </Grid>
-          <Typography component="h1" variant="body2" className={classes.resetText}>
-            We will send you a password reset link on your registered email address.
-          </Typography>
           {loading && <Loading />}
           <Button
-            onClick={handleResetPassword}
+            onClick={handleVerify}
             fullWidth
             variant="contained"
             color="primary"
             disabled={disabled}
             className={classes.submit}
           >
-            Send Reset Link
+            Resend verification link
           </Button>
-          <Grid container justify="flex-end">
-            <Grid item>
-              <Link href="/signin" variant="body2">
-                Back to sign in page
-              </Link>
-            </Grid>
-          </Grid>
         </form>
       </div>
     </Container>
   );
 };
 
-export default ResetPassword;
+export default Verify;

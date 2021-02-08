@@ -77,7 +77,11 @@ const SignIn = () => {
         });
         updateSnackbar('Successfully logged in', 'success');
         setLoading(false);
-        history.push('/profile');
+        if (emailVerified) {
+          history.push('/profile');
+        } else {
+          history.push('/verify');
+        }
       })
       .catch(() => {
         setError(true);
