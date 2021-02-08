@@ -49,6 +49,7 @@ const SignIn = () => {
   };
 
   const handleSignIn = () => {
+    // setting up the authentication details
     setAuth(true);
 
     // updating the states of the global snackbar
@@ -119,7 +120,7 @@ const SignIn = () => {
               </Link>
             </Grid>
             <Grid item>
-              <Link href="/home" variant="body2">
+              <Link href="/signup" variant="body2">
                 Don&apos;t have an account? Sign Up
               </Link>
             </Grid>
