@@ -1,7 +1,8 @@
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import SignIn from './components/SignIn/SignIn';
-import './App.css';
 import CustomAppBar from './components/common/AppBar';
+import CustomSnackbar from './components/common/Snackbar';
+import './App.css';
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
           <SignIn />
         </Route>
       </Switch>
+      <CustomSnackbar />
     </BrowserRouter>
   );
 };

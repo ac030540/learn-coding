@@ -8,11 +8,10 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <StoreProvider store={store}>
-      <App />
-    </StoreProvider>
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <StoreProvider store={store}>
+    <App />
+  </StoreProvider>,
   document.getElementById('root')
 );
 
