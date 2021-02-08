@@ -11,6 +11,7 @@ import SignUp from './components/auth/SignUp';
 import Verify from './components/auth/Verify';
 import { auth as firebaseAuth } from './firebase.config';
 import Profile from './components/user/profile';
+import Settings from './components/user/settings';
 
 const App = () => {
   const setAuth = useStoreActions((actions) => actions.setAuth);
@@ -57,6 +58,9 @@ const App = () => {
         </Route>
         <Route exact path="/profile">
           <Profile />
+        </Route>
+        <Route exact path="/settings">
+          <Settings />
         </Route>
         )
       </Switch>
