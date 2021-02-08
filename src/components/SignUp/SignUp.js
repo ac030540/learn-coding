@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -9,6 +10,10 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import * as EmailValidator from 'email-validator';
+import * as PasswordValidator from 'password-validator';
+import { useStoreActions } from 'easy-peasy';
+import { auth as firebaseAuth } from '../../firebase.config';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -32,16 +37,27 @@ const useStyles = makeStyles((theme) => ({
 
 const SignUp = () => {
   const classes = useStyles();
-  const [userDetails, setUserDetails] = useState({
+  const initialUserDetails = {
     firstName: '',
     lastName: '',
     email: '',
     password: '',
-  });
+  }
+  const [userDetails, setUserDetails] = useState(initialUserDetails);
+  const setSnackbarStates = useStoreActions((actions) => actions.setSnackbarStates);
+  const initialErrors = {
+    firstName: false,
+    lastName: false,
+    email: false,
+    password: false,
+  }
+  const [errors, setErrors] = useState(initialErrors);
+
 
   const onChangeHandler = (event) => {
     const { currentTarget, target } = event;
     const { value } = target;
+    setErrors({ ...errors, firstName: false, lastName: false, email: false, password: false })
     if (currentTarget.name === 'email') setUserDetails((user) => ({ ...user, email: value }));
     else if (currentTarget.name === 'password')
       setUserDetails((user) => ({ ...user, password: value }));
@@ -49,6 +65,63 @@ const SignUp = () => {
       setUserDetails((user) => ({ ...user, firstName: value }));
     else if (currentTarget.name === 'lastName')
       setUserDetails((user) => ({ ...user, lastName: value }));
+  };
+
+  const updateSnackbar = (message) => {
+    setSnackbarStates({
+      open: true,
+      severity: 'error',
+      message,
+    });
+  };
+
+  const handleValidation = () => {
+    const schema = new PasswordValidator();
+    let valid = true;
+    // password schema
+    schema
+      .is().min(8) // Minimum length 8
+      .is().max(100) // Maximum length 100
+
+    if (userDetails.firstName.trim() === '') {
+      setErrors({ ...errors, firstName: true });
+      updateSnackbar('Invalid first name');
+      valid = false;
+    } else if (userDetails.lastName.trim() === '') {
+      setErrors({ ...errors, lastName: true });
+      updateSnackbar('Invalid last name');
+      valid = false;
+    } else if (!EmailValidator.validate(userDetails.email)) {
+      setErrors({ ...errors, email: true });
+      updateSnackbar('Invalid email address');
+      valid = false;
+    } else if (!schema.validate(userDetails.password)) {
+      setErrors({ ...errors, password: true });
+      updateSnackbar('Invalid Password');
+      valid = false;
+    }
+    return valid;
+  };
+
+  const  createUserOnFirebaseAuth = async (email, password) => {
+    try{
+      const { user } = await firebaseAuth.createUserWithEmailAndPassword(email, password);
+      // generateUserDocument(user, {displayName});
+      console.log(user);
+      // uid, email, first name, last name
+    }
+    catch(error){
+      console.log(error);
+      updateSnackbar('Cannot Signup the user');
+    }
+    setUserDetails(initialUserDetails);
+    setErrors(initialErrors);
+  };
+
+  const handleSignup = () => {
+    if(handleValidation()) {
+      createUserOnFirebaseAuth(userDetails.email, userDetails.password);
+    }
   };
 
   return (
@@ -74,6 +147,7 @@ const SignUp = () => {
                 label="First Name"
                 value={userDetails.firstName}
                 autoFocus
+                error={errors.firstName}
                 onChange={onChangeHandler}
               />
             </Grid>
@@ -87,6 +161,7 @@ const SignUp = () => {
                 name="lastName"
                 value={userDetails.lastName}
                 autoComplete="lname"
+                error={errors.lastName}
                 onChange={onChangeHandler}
               />
             </Grid>
@@ -100,6 +175,7 @@ const SignUp = () => {
                 name="email"
                 value={userDetails.email}
                 autoComplete="email"
+                error={errors.email}
                 onChange={onChangeHandler}
               />
             </Grid>
@@ -114,15 +190,16 @@ const SignUp = () => {
                 id="password"
                 onChange={onChangeHandler}
                 value={userDetails.password}
+                error={errors.password}
                 autoComplete="current-password"
               />
             </Grid>
           </Grid>
           <Button
-            type="submit"
             fullWidth
             variant="contained"
             color="primary"
+            onClick={handleSignup}
             className={classes.submit}
           >
             Sign Up

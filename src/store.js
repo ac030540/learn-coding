@@ -2,7 +2,7 @@
 import { createStore, action } from 'easy-peasy';
 
 const store = createStore({
-  auth: false,
+  auth: null,
   setAuth: action((state, payload) => {
     state.auth = payload;
   }),
@@ -13,11 +13,10 @@ const store = createStore({
     message: 'No message',
   },
   setSnackbarStates: action((state, payload) => {
-    const { open, handleSnackbarClose, severity, message } = payload;
+    const { open, severity, message } = payload;
     state.snackbarStates = {
       ...state.snackbarStates,
       open,
-      handleSnackbarClose,
       severity,
       message,
     };

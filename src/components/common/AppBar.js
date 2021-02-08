@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -37,13 +37,7 @@ const CustomAppBar = () => {
   const setAuth = useStoreActions((actions) => actions.setAuth);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-
-  // updating the global auth state
-  useEffect(() => {
-    firebaseAuth.onAuthStateChanged((userAuth) => {
-      setAuth(userAuth);
-    });
-  }, []);
+  const setSnackbarStates = useStoreActions((actions) => actions.setSnackbarStates);
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -54,7 +48,25 @@ const CustomAppBar = () => {
   const handleSignIn = () => history.push('/signin');
 
   const handleLogout = () => {
-    setAuth(false);
+    firebaseAuth
+      .signOut()
+      .then(() => {
+        // Sign-out successful.
+        setAuth(null);
+        setSnackbarStates({
+          open: true,
+          severity: 'success',
+          message: 'Successfully signed out',
+        });
+      })
+      .catch(() => {
+        setSnackbarStates({
+          open: true,
+          severity: 'error',
+          message: 'Unable to signout',
+        });
+        // An error happened.
+      });
     setAnchorEl(null);
   };
 
@@ -72,7 +84,7 @@ const CustomAppBar = () => {
           <Typography variant="h6" className={classes.title} onClick={() => history.push('/')}>
             <span className={classes.titleText}>Learn Coding</span>
           </Typography>
-          {auth ? (
+          {auth && auth.uid ? (
             <div>
               <IconButton
                 aria-label="account of current user"
