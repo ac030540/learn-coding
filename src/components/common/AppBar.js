@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -11,6 +11,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { useStoreState, useStoreActions } from 'easy-peasy';
+import { auth as firebaseAuth } from '../../firebase.config';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,6 +37,13 @@ const CustomAppBar = () => {
   const setAuth = useStoreActions((actions) => actions.setAuth);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+
+  // updating the global auth state
+  useEffect(() => {
+    firebaseAuth.onAuthStateChanged((userAuth) => {
+      setAuth(userAuth);
+    });
+  }, []);
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);

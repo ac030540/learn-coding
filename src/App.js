@@ -5,7 +5,7 @@ import SignIn from './components/SignIn/SignIn';
 import './App.css';
 import CustomAppBar from './components/common/AppBar';
 
-function App() {
+const App = () => {
   return (
     <StoreProvider store={store}>
       <BrowserRouter basename={process.env.PUBLIC_URL}>
@@ -18,6 +18,6 @@ function App() {
       </BrowserRouter>
     </StoreProvider>
   );
-}
+};
 
 export default App;
