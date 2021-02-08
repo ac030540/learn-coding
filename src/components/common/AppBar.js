@@ -52,13 +52,13 @@ const CustomAppBar = () => {
       .signOut()
       .then(() => {
         // Sign-out successful.
+        history.push('/signin');
         setAuth(null);
         setSnackbarStates({
           open: true,
           severity: 'success',
           message: 'Successfully signed out',
         });
-        history.push('/signin');
       })
       .catch(() => {
         setSnackbarStates({

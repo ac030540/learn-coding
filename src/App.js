@@ -1,18 +1,21 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { useStoreActions, useStoreState } from 'easy-peasy';
-import SignIn from './components/SignIn/SignIn';
+import SignIn from './components/auth/SignIn';
 import CustomAppBar from './components/common/AppBar';
 import CustomSnackbar from './components/common/Snackbar';
-import ResetPassword from './components/Reset/ResetPassword';
+import ResetPassword from './components/auth/ResetPassword';
+import Loading from './components/common/Loading';
 import './App.css';
-import SignUp from './components/SignUp/SignUp';
-import Verify from './components/Verify/Verify';
+import SignUp from './components/auth/SignUp';
+import Verify from './components/auth/Verify';
 import { auth as firebaseAuth } from './firebase.config';
+import Profile from './components/user/profile';
 
 const App = () => {
   const setAuth = useStoreActions((actions) => actions.setAuth);
   const auth = useStoreState((state) => state.auth);
+  const [loading, setLoading] = useState(true);
 
   // initialising the global auth state
   useEffect(() => {
@@ -31,9 +34,12 @@ const App = () => {
         email,
         emailVerified,
       });
+      setLoading(false);
     });
   }, []);
-  return (
+  return loading ? (
+    <Loading />
+  ) : (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       <CustomAppBar />
       <Switch>
@@ -48,6 +54,9 @@ const App = () => {
         </Route>
         <Route exact path="/reset">
           <ResetPassword />
+        </Route>
+        <Route exact path="/profile">
+          <Profile />
         </Route>
         )
       </Switch>
