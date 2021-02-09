@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 const CustomAppBar = () => {
   const classes = useStyles();
   const auth = useStoreState((state) => state.auth);
-  const setAuth = useStoreActions((actions) => actions.setAuth);
+  // const setAuth = useStoreActions((actions) => actions.setAuth);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const setSnackbarStates = useStoreActions((actions) => actions.setSnackbarStates);
@@ -52,8 +52,6 @@ const CustomAppBar = () => {
       .signOut()
       .then(() => {
         // Sign-out successful.
-        history.push('/signin');
-        setAuth(null);
         setSnackbarStates({
           open: true,
           severity: 'success',

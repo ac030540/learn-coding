@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { StoreProvider } from 'easy-peasy';
+import { BrowserRouter } from 'react-router-dom';
 import store from './store';
 import './index.css';
 import 'fontsource-roboto';
@@ -10,7 +11,9 @@ import reportWebVitals from './reportWebVitals';
 ReactDOM.render(
   // <React.StrictMode>
   <StoreProvider store={store}>
-    <App />
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
+      <App />
+    </BrowserRouter>
   </StoreProvider>,
   document.getElementById('root')
 );

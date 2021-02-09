@@ -12,6 +12,7 @@ import Container from '@material-ui/core/Container';
 import { useStoreActions } from 'easy-peasy';
 import Loading from '../common/Loading';
 import { auth as firebaseAuth } from '../../firebase.config';
+import useRedirectSignedUser from '../../customHooks/useRedirectSignedUser';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -42,7 +43,7 @@ const ResetPassword = () => {
   const setSnackbarStates = useStoreActions((actions) => actions.setSnackbarStates);
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(false);
-
+  useRedirectSignedUser();
   const handleResetPassword = () => {
     setLoading(true);
     setDisabled(true);

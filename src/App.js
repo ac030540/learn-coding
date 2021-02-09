@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import SignIn from './components/auth/SignIn';
 import CustomAppBar from './components/common/AppBar';
@@ -17,7 +17,8 @@ const App = () => {
   const setAuth = useStoreActions((actions) => actions.setAuth);
   const auth = useStoreState((state) => state.auth);
   const [loading, setLoading] = useState(true);
-  console.log('auth', auth);
+  const history = useHistory();
+
   // This effect automatically updates the auth state when there is change in the firebase auth
   useEffect(() => {
     firebaseAuth.onAuthStateChanged((user) => {
@@ -53,6 +54,8 @@ const App = () => {
           email,
           emailVerified,
         });
+        // this is to move the user to signin page on logout
+        history.push('/signin');
         setLoading(false);
       }
     });
@@ -60,7 +63,7 @@ const App = () => {
   return loading ? (
     <Loading />
   ) : (
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
+    <>
       <CustomAppBar />
       <Switch>
         <Route exact path="/verify">
@@ -84,7 +87,7 @@ const App = () => {
         )
       </Switch>
       <CustomSnackbar />
-    </BrowserRouter>
+    </>
   );
 };
 

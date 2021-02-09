@@ -10,6 +10,8 @@ import Container from '@material-ui/core/Container';
 import { useStoreActions } from 'easy-peasy';
 import Loading from '../common/Loading';
 import { auth as firebaseAuth } from '../../firebase.config';
+import useRedirectVerifiedUser from '../../customHooks/useRedirectVerifiedUser';
+import useRedirectUnsignedUser from '../../customHooks/useRedirectUnsignedUser';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -39,6 +41,9 @@ const Verify = () => {
   const setSnackbarStates = useStoreActions((actions) => actions.setSnackbarStates);
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(false);
+
+  useRedirectUnsignedUser();
+  useRedirectVerifiedUser();
 
   const handleVerify = () => {
     setLoading(true);
