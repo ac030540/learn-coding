@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -40,11 +40,6 @@ const Verify = () => {
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(false);
 
-  useEffect(() => {
-    const user = firebaseAuth.currentUser;
-    if (user) user.sendEmailVerification();
-  }, []);
-
   const handleVerify = () => {
     setLoading(true);
     setDisabled(true);
@@ -56,7 +51,7 @@ const Verify = () => {
         setSnackbarStates({
           open: true,
           severity: 'success',
-          message: 'Successfully sent the reset email',
+          message: 'Successfully sent the verification email',
         });
         setLoading(false);
         setDisabled(true);
@@ -87,8 +82,8 @@ const Verify = () => {
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <Typography component="h1" variant="body2" className={classes.resetText}>
-                  We have sent you an email verification link on your registered email address.
-                  Please verify your email address to access our services.
+                  In order to access our services you need to erify your email address. We will send
+                  you an email which will guide you through the verification process.
                 </Typography>
               </Grid>
             </Grid>
@@ -100,7 +95,7 @@ const Verify = () => {
               disabled={disabled}
               className={classes.submit}
             >
-              Resend verification link
+              Send verification link
             </Button>
           </form>
         </div>

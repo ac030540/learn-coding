@@ -110,15 +110,15 @@ const SignUp = () => {
   };
 
   const updateDB = (uid, emailVerified) => {
+    const formData = new FormData();
+    formData.append("uid", uid);
+    formData.append("email", userDetails.email);
+    formData.append("firstName", userDetails.firstName);
+    formData.append("lastName", userDetails.lastName);
+
     fetch(`${process.env.REACT_APP_SERVER_URL}/user`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        uid,
-        email: userDetails.email,
-        firstName: userDetails.firstName,
-        lastName: userDetails.lastName,
-      }),
+      body: formData,
     })
       .then((response) => response.json())
       .then((data) => {
@@ -150,9 +150,11 @@ const SignUp = () => {
     try{
       const { user } = await firebaseAuth.createUserWithEmailAndPassword(userDetails.email, userDetails.password);
       const { uid, emailVerified } = user;
+      // console.log(user, "user recieved");
       if(uid) updateDB(uid, emailVerified);
     }
-    catch{
+    catch(error){
+      // console.log(error);
       setLoading(false);
       updateSnackbar('Cannot Signup the user');
     }

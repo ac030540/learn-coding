@@ -61,7 +61,6 @@ const SignIn = () => {
       message,
     });
   };
-  console.log(auth, 'auth');
 
   const signInWithFirebaseAuth = () => {
     setLoading(true);

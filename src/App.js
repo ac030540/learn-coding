@@ -17,7 +17,7 @@ const App = () => {
   const setAuth = useStoreActions((actions) => actions.setAuth);
   const auth = useStoreState((state) => state.auth);
   const [loading, setLoading] = useState(true);
-
+  console.log('auth', auth);
   // This effect automatically updates the auth state when there is change in the firebase auth
   useEffect(() => {
     firebaseAuth.onAuthStateChanged((user) => {
@@ -38,11 +38,12 @@ const App = () => {
               setAuth({
                 ...auth,
                 uid,
-                firstName: userData.firstName,
-                lastName: userData.lastName,
+                firstName: userData.data.firstName,
+                lastName: userData.data.lastName,
                 email,
                 emailVerified,
               });
+              setLoading(false);
             }
           });
       } else {
@@ -52,8 +53,8 @@ const App = () => {
           email,
           emailVerified,
         });
+        setLoading(false);
       }
-      setLoading(false);
     });
   }, []);
   return loading ? (
