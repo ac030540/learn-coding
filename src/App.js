@@ -18,7 +18,7 @@ const App = () => {
   const auth = useStoreState((state) => state.auth);
   const [loading, setLoading] = useState(true);
 
-  // initialising the global auth state
+  // This effect automatically updates the auth state when there is change in the firebase auth
   useEffect(() => {
     firebaseAuth.onAuthStateChanged((user) => {
       let uid = null;
@@ -28,13 +28,31 @@ const App = () => {
         uid = user.uid;
         emailVerified = user.emailVerified;
         email = user.email;
+        // fetching all the user details from database
+        fetch(`${process.env.REACT_APP_SERVER_URL}/user/${uid}`, {
+          method: 'GET',
+        })
+          .then((userResponse) => userResponse.json())
+          .then((userData) => {
+            if (userData.success) {
+              setAuth({
+                ...auth,
+                uid,
+                firstName: userData.firstName,
+                lastName: userData.lastName,
+                email,
+                emailVerified,
+              });
+            }
+          });
+      } else {
+        setAuth({
+          ...auth,
+          uid,
+          email,
+          emailVerified,
+        });
       }
-      setAuth({
-        ...auth,
-        uid,
-        email,
-        emailVerified,
-      });
       setLoading(false);
     });
   }, []);

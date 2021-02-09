@@ -61,6 +61,7 @@ const SignIn = () => {
       message,
     });
   };
+  console.log(auth, 'auth');
 
   const signInWithFirebaseAuth = () => {
     setLoading(true);
@@ -69,19 +70,29 @@ const SignIn = () => {
       .then((response) => {
         const { user } = response;
         const { uid, emailVerified } = user;
-        setAuth({
-          ...auth,
-          uid,
-          email,
-          emailVerified,
-        });
-        updateSnackbar('Successfully logged in', 'success');
-        setLoading(false);
-        if (emailVerified) {
-          history.push('/profile');
-        } else {
-          history.push('/verify');
-        }
+        fetch(`${process.env.REACT_APP_SERVER_URL}/user/${uid}`, {
+          method: 'GET',
+        })
+          .then((userResponse) => userResponse.json())
+          .then((userData) => {
+            if (userData.success) {
+              setAuth({
+                ...auth,
+                uid,
+                firstName: userData.firstName,
+                lastName: userData.lastName,
+                email,
+                emailVerified,
+              });
+              updateSnackbar('Successfully logged in', 'success');
+              setLoading(false);
+              if (emailVerified) {
+                history.push('/profile');
+              } else {
+                history.push('/verify');
+              }
+            }
+          });
       })
       .catch(() => {
         setError(true);
@@ -95,75 +106,77 @@ const SignIn = () => {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
-        <form className={classes.form} noValidate>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            disabled={loading}
-            value={email}
-            onChange={onChangeHandler}
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            error={error}
-            autoFocus
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            value={password}
-            disabled={loading}
-            fullWidth
-            onChange={onChangeHandler}
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            error={error}
-            autoComplete="current-password"
-          />
-          {/* <FormControlLabel
+    <div>
+      {loading && <Loading />}
+      <Container component="main" maxWidth="xs">
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+          <form className={classes.form} noValidate>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              disabled={loading}
+              value={email}
+              onChange={onChangeHandler}
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              error={error}
+              autoFocus
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              value={password}
+              disabled={loading}
+              fullWidth
+              onChange={onChangeHandler}
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              error={error}
+              autoComplete="current-password"
+            />
+            {/* <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           /> */}
-          {loading && <Loading />}
-          <Button
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            onClick={handleSignIn}
-            disabled={loading}
-          >
-            Sign In
-          </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="/reset" variant="body2">
-                Forgot password?
-              </Link>
+            <Button
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              onClick={handleSignIn}
+              disabled={loading}
+            >
+              Sign In
+            </Button>
+            <Grid container>
+              <Grid item xs>
+                <Link href="/reset" variant="body2">
+                  Forgot password?
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link href="/signup" variant="body2">
+                  Don&apos;t have an account? Sign Up
+                </Link>
+              </Grid>
             </Grid>
-            <Grid item>
-              <Link href="/signup" variant="body2">
-                Don&apos;t have an account? Sign Up
-              </Link>
-            </Grid>
-          </Grid>
-        </form>
-      </div>
-    </Container>
+          </form>
+        </div>
+      </Container>
+    </div>
   );
 };
 

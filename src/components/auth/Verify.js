@@ -72,38 +72,40 @@ const Verify = () => {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <MailOutlineIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Email Verification
-        </Typography>
-        <form className={classes.form} noValidate>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Typography component="h1" variant="body2" className={classes.resetText}>
-                We have sent you an email verification link on your registered email address. Please
-                verify your email address to access our services.
-              </Typography>
+    <div>
+      {loading && <Loading />}
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <MailOutlineIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Email Verification
+          </Typography>
+          <form className={classes.form} noValidate>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Typography component="h1" variant="body2" className={classes.resetText}>
+                  We have sent you an email verification link on your registered email address.
+                  Please verify your email address to access our services.
+                </Typography>
+              </Grid>
             </Grid>
-          </Grid>
-          {loading && <Loading />}
-          <Button
-            onClick={handleVerify}
-            fullWidth
-            variant="contained"
-            color="primary"
-            disabled={disabled}
-            className={classes.submit}
-          >
-            Resend verification link
-          </Button>
-        </form>
-      </div>
-    </Container>
+            <Button
+              onClick={handleVerify}
+              fullWidth
+              variant="contained"
+              color="primary"
+              disabled={disabled}
+              className={classes.submit}
+            >
+              Resend verification link
+            </Button>
+          </form>
+        </div>
+      </Container>
+    </div>
   );
 };
 

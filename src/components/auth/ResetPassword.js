@@ -68,55 +68,57 @@ const ResetPassword = () => {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <VpnKeyOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Reset Password
-        </Typography>
-        <form className={classes.form} noValidate>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                value={email}
-                autoComplete="email"
-                onChange={(event) => setEmail(event.target.value)}
-              />
-            </Grid>
-          </Grid>
-          <Typography component="h1" variant="body2" className={classes.resetText}>
-            We will send you a password reset link on your registered email address.
+    <div>
+      {loading && <Loading />}
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <VpnKeyOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Reset Password
           </Typography>
-          {loading && <Loading />}
-          <Button
-            onClick={handleResetPassword}
-            fullWidth
-            variant="contained"
-            color="primary"
-            disabled={disabled}
-            className={classes.submit}
-          >
-            Send Reset Link
-          </Button>
-          <Grid container justify="flex-end">
-            <Grid item>
-              <Link href="/signin" variant="body2">
-                Back to sign in page
-              </Link>
+          <form className={classes.form} noValidate>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  value={email}
+                  autoComplete="email"
+                  onChange={(event) => setEmail(event.target.value)}
+                />
+              </Grid>
             </Grid>
-          </Grid>
-        </form>
-      </div>
-    </Container>
+            <Typography component="h1" variant="body2" className={classes.resetText}>
+              We will send you a password reset link on your registered email address.
+            </Typography>
+            <Button
+              onClick={handleResetPassword}
+              fullWidth
+              variant="contained"
+              color="primary"
+              disabled={disabled}
+              className={classes.submit}
+            >
+              Send Reset Link
+            </Button>
+            <Grid container justify="flex-end">
+              <Grid item>
+                <Link href="/signin" variant="body2">
+                  Back to sign in page
+                </Link>
+              </Grid>
+            </Grid>
+          </form>
+        </div>
+      </Container>
+    </div>
   );
 };
 

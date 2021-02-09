@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,7 +13,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import * as EmailValidator from 'email-validator';
 import * as PasswordValidator from 'password-validator';
-import { useStoreActions } from 'easy-peasy';
+import { useStoreActions, useStoreState } from 'easy-peasy';
+import Loading from '../common/Loading';
 import { auth as firebaseAuth } from '../../firebase.config';
 
 const useStyles = makeStyles((theme) => ({
@@ -37,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
 
 const SignUp = () => {
   const classes = useStyles();
+  const history = useHistory();
   const initialUserDetails = {
     firstName: '',
     lastName: '',
@@ -44,6 +47,7 @@ const SignUp = () => {
     password: '',
   }
   const [userDetails, setUserDetails] = useState(initialUserDetails);
+  const [loading, setLoading] = useState(false);
   const setSnackbarStates = useStoreActions((actions) => actions.setSnackbarStates);
   const initialErrors = {
     firstName: false,
@@ -51,6 +55,8 @@ const SignUp = () => {
     email: false,
     password: false,
   }
+  const auth = useStoreState((state) => state.auth);
+  const setAuth = useStoreActions((actions) => actions.setAuth);
   const [errors, setErrors] = useState(initialErrors);
 
 
@@ -67,10 +73,10 @@ const SignUp = () => {
       setUserDetails((user) => ({ ...user, lastName: value }));
   };
 
-  const updateSnackbar = (message) => {
+  const updateSnackbar = (message, severity = 'error') => {
     setSnackbarStates({
       open: true,
-      severity: 'error',
+      severity,
       message,
     });
   };
@@ -103,29 +109,66 @@ const SignUp = () => {
     return valid;
   };
 
-  const  createUserOnFirebaseAuth = async (email, password) => {
+  const updateDB = (uid, emailVerified) => {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/user`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        uid,
+        email: userDetails.email,
+        firstName: userDetails.firstName,
+        lastName: userDetails.lastName,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if(data.success) {
+          setAuth({
+            ...auth,
+            uid,
+            email: userDetails.email,
+            firstName: userDetails.firstName,
+            lastName: userDetails.lastName,
+            emailVerified,
+          });
+          setLoading(false);
+          setUserDetails(initialUserDetails);
+          setErrors(initialErrors);
+          updateSnackbar('Signed up successfully', 'success');
+          history.push('/profile');
+        } else {
+          updateSnackbar('Error signing up the user');
+        }
+      })
+      .catch(() => {
+        setLoading(false);
+        updateSnackbar('Cannot Signup the user');
+      })
+  };
+
+  const  createUserOnFirebaseAuth = async () => {
     try{
-      const { user } = await firebaseAuth.createUserWithEmailAndPassword(email, password);
-      // generateUserDocument(user, {displayName});
-      console.log(user);
-      // uid, email, first name, last name
+      const { user } = await firebaseAuth.createUserWithEmailAndPassword(userDetails.email, userDetails.password);
+      const { uid, emailVerified } = user;
+      if(uid) updateDB(uid, emailVerified);
     }
-    catch(error){
-      console.log(error);
+    catch{
+      setLoading(false);
       updateSnackbar('Cannot Signup the user');
     }
-    setUserDetails(initialUserDetails);
-    setErrors(initialErrors);
   };
 
   const handleSignup = () => {
+    setLoading(true);
     if(handleValidation()) {
-      createUserOnFirebaseAuth(userDetails.email, userDetails.password);
+      createUserOnFirebaseAuth();
     }
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <div>
+      {loading && <Loading />}
+      <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -148,6 +191,7 @@ const SignUp = () => {
                 value={userDetails.firstName}
                 autoFocus
                 error={errors.firstName}
+                disabled={loading}
                 onChange={onChangeHandler}
               />
             </Grid>
@@ -159,6 +203,7 @@ const SignUp = () => {
                 id="lastName"
                 label="Last Name"
                 name="lastName"
+                disabled={loading}
                 value={userDetails.lastName}
                 autoComplete="lname"
                 error={errors.lastName}
@@ -173,6 +218,7 @@ const SignUp = () => {
                 id="email"
                 label="Email Address"
                 name="email"
+                disabled={loading}
                 value={userDetails.email}
                 autoComplete="email"
                 error={errors.email}
@@ -188,6 +234,7 @@ const SignUp = () => {
                 label="Password"
                 type="password"
                 id="password"
+                disabled={loading}
                 onChange={onChangeHandler}
                 value={userDetails.password}
                 error={errors.password}
@@ -201,6 +248,7 @@ const SignUp = () => {
             color="primary"
             onClick={handleSignup}
             className={classes.submit}
+            disabled={loading}
           >
             Sign Up
           </Button>
@@ -214,6 +262,7 @@ const SignUp = () => {
         </form>
       </div>
     </Container>
+    </div>
   );
 };
 
