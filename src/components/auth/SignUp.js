@@ -170,6 +170,8 @@ const SignUp = () => {
     setLoading(true);
     if(handleValidation()) {
       createUserOnFirebaseAuth();
+    } else {
+      setLoading(false);
     }
   };
 
