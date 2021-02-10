@@ -9,6 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { useHistory } from 'react-router-dom';
 import useRedirectUnsignedUser from '../../customHooks/useRedirectUnsignedUser';
 
 const useStyles = makeStyles((theme) => ({
@@ -38,13 +39,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const tiers = [
+const levels = [
   {
     title: 'Beginner',
     progress: '0',
     description: ['Basic concepts', 'Loops', 'Arrays', 'conditionals'],
     buttonText: 'get started',
     buttonVariant: 'outlined',
+    path: '/beginner',
   },
   {
     title: 'Advanced',
@@ -53,6 +55,7 @@ const tiers = [
     description: ['Intermediate concepts', 'OOPM', 'Functional programming', 'High level concepts'],
     buttonText: 'get started',
     buttonVariant: 'outlined',
+    path: '/advanced',
   },
   {
     title: 'Expert',
@@ -60,12 +63,18 @@ const tiers = [
     description: ['Expert level concepts', 'Time complexity', 'Space complexity', 'Code debugging'],
     buttonText: 'get started',
     buttonVariant: 'outlined',
+    path: '/expert',
   },
 ];
 
-export default function Pricing() {
+const Homepage = () => {
   const classes = useStyles();
   useRedirectUnsignedUser();
+  const history = useHistory();
+
+  const handleButtonClick = (path) => {
+    history.push(path);
+  };
 
   return (
     <>
@@ -82,13 +91,13 @@ export default function Pricing() {
       {/* End hero unit */}
       <Container maxWidth="md" component="main">
         <Grid container spacing={5} alignItems="flex-end">
-          {tiers.map((tier) => (
+          {levels.map((level) => (
             // Enterprise card is full width at sm breakpoint
-            <Grid item key={tier.title} xs={12} sm={tier.title === 'Enterprise' ? 12 : 6} md={4}>
+            <Grid item key={level.title} xs={12} sm={level.title === 'Enterprise' ? 12 : 6} md={4}>
               <Card>
                 <CardHeader
-                  title={tier.title}
-                  subheader={tier.subheader}
+                  title={level.title}
+                  subheader={level.subheader}
                   titleTypographyProps={{ align: 'center' }}
                   subheaderTypographyProps={{ align: 'center' }}
                   className={classes.cardHeader}
@@ -96,14 +105,14 @@ export default function Pricing() {
                 <CardContent>
                   <div className={classes.progress}>
                     <Typography component="h2" variant="h3" color="textPrimary">
-                      {tier.progress}%
+                      {level.progress}%
                     </Typography>
                     <Typography variant="h6" color="textSecondary">
                       &nbsp;progress
                     </Typography>
                   </div>
                   <ul>
-                    {tier.description.map((line) => (
+                    {level.description.map((line) => (
                       <Typography component="li" variant="subtitle1" align="center" key={line}>
                         {line}
                       </Typography>
@@ -111,8 +120,13 @@ export default function Pricing() {
                   </ul>
                 </CardContent>
                 <CardActions>
-                  <Button fullWidth variant={tier.buttonVariant} color="primary">
-                    {tier.buttonText}
+                  <Button
+                    onClick={() => handleButtonClick(level.path)}
+                    fullWidth
+                    variant={level.buttonVariant}
+                    color="primary"
+                  >
+                    {level.buttonText}
                   </Button>
                 </CardActions>
               </Card>
@@ -122,4 +136,6 @@ export default function Pricing() {
       </Container>
     </>
   );
-}
+};
+
+export default Homepage;
