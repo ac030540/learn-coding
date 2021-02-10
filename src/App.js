@@ -5,6 +5,7 @@ import SignIn from './components/auth/SignIn';
 import CustomAppBar from './components/common/AppBar';
 import CustomSnackbar from './components/common/Snackbar';
 import ResetPassword from './components/auth/ResetPassword';
+import Homepage from './components/homepage/Homepage';
 import Loading from './components/common/Loading';
 import './App.css';
 import SignUp from './components/auth/SignUp';
@@ -68,6 +69,9 @@ const App = () => {
     <>
       <CustomAppBar />
       <Switch>
+        <Route exact path="/">
+          <Homepage />
+        </Route>
         <Route exact path="/verify">
           <Verify />
         </Route>
