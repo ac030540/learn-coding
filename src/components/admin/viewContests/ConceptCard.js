@@ -6,6 +6,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import { useHistory } from 'react-router';
 
 const useStyles = makeStyles({
   root: {
@@ -13,8 +14,17 @@ const useStyles = makeStyles({
   },
 });
 
-const ConceptCard = ({ concept }) => {
+const ConceptCard = ({ concept, setOpen, setSelectedConcept }) => {
   const classes = useStyles();
+  const history = useHistory();
+  const handleEdit = () => {
+    history.push(`/admin/concepts/${concept._id}/edit`);
+  };
+
+  const handleDelete = () => {
+    setSelectedConcept(concept);
+    setOpen(true);
+  };
 
   return (
     <Card className={classes.root}>
@@ -29,10 +39,10 @@ const ConceptCard = ({ concept }) => {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary">
+        <Button size="small" color="primary" onClick={handleEdit}>
           Edit
         </Button>
-        <Button size="small" color="primary">
+        <Button size="small" color="primary" onClick={handleDelete}>
           Delete
         </Button>
       </CardActions>

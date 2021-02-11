@@ -6,6 +6,10 @@ const store = createStore({
   setAuth: action((state, payload) => {
     state.auth = payload;
   }),
+  level: 'Beginner',
+  setLevel: action((state, payload) => {
+    state.level = payload;
+  }),
   snackbarStates: {
     open: false,
     handleSnackbarClose: null,
