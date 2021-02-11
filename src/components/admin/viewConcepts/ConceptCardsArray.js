@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import ConceptCard from './ConceptCard';
 import CustomDialog from '../../common/Dialog';
-import CustomBackdrop from '../../common/Backdrop';
+// import CustomBackdrop from '../../common/Backdrop';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,24 +16,23 @@ const ConceptCardsArray = ({ concepts }) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [selectedConcept, setSelectedConcept] = useState({});
-  const [backdropOpen, setBackdropOpen] = useState(false);
+  // const [backdropOpen, setBackdropOpen] = useState(false);
   const auth = useStoreState((state) => state.auth);
   const setSnackbarStates = useStoreActions((actions) => actions.setSnackbarStates);
-  console.log(selectedConcept);
 
   const handleAccept = () => {
-    setBackdropOpen(true);
+    // setBackdropOpen(true);
     const formData = new FormData();
     formData.append('email', auth.email);
 
     fetch(`${process.env.REACT_APP_SERVER_URL}/concept/${selectedConcept._id}`, {
-      method: 'POST',
+      method: 'DELETE',
       body: formData,
     })
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
-          setBackdropOpen(false);
+          // setBackdropOpen(false);
           setOpen(false);
           setSnackbarStates({
             open: true,
@@ -41,7 +40,7 @@ const ConceptCardsArray = ({ concepts }) => {
             message: 'Successfully deleted the concept',
           });
         } else {
-          setBackdropOpen(false);
+          // setBackdropOpen(false);
           setOpen(false);
           setSnackbarStates({
             open: true,
@@ -51,7 +50,7 @@ const ConceptCardsArray = ({ concepts }) => {
         }
       })
       .catch(() => {
-        setBackdropOpen(false);
+        // setBackdropOpen(false);
         setOpen(false);
         setSnackbarStates({
           open: true,
@@ -70,7 +69,7 @@ const ConceptCardsArray = ({ concepts }) => {
         title="Delete confirmation"
         handleAccept={handleAccept}
       />
-      <CustomBackdrop open={backdropOpen} />
+      {/* <CustomBackdrop open={backdropOpen} /> */}
       <Grid className={classes.root} container spacing={3}>
         {concepts.map((concept) => (
           <Grid item xs={12} key={concept._id}>

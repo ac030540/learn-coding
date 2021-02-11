@@ -13,7 +13,8 @@ import Verify from './components/auth/Verify';
 import { auth as firebaseAuth } from './firebase.config';
 import Profile from './components/user/profile';
 import Settings from './components/user/settings';
-import Concepts from './components/admin/viewContests/Concepts';
+import Concepts from './components/admin/viewConcepts/Concepts';
+import EditConcepts from './components/admin/editConcepts/EditConcepts';
 
 const App = () => {
   const setAuth = useStoreActions((actions) => actions.setAuth);
@@ -93,6 +94,9 @@ const App = () => {
         </Route>
         <Route exact path="/admin/concepts">
           <Concepts />
+        </Route>
+        <Route exact path="/admin/concepts/:_id/edit">
+          <EditConcepts />
         </Route>
         )
       </Switch>
