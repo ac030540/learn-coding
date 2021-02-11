@@ -9,20 +9,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ConceptCardsArray = () => {
+const ConceptCardsArray = ({ concepts }) => {
   const classes = useStyles();
 
   return (
     <Grid className={classes.root} container spacing={3}>
-      <Grid item xs={12}>
-        <ConceptCard />
-      </Grid>
-      <Grid item xs={12}>
-        <ConceptCard />
-      </Grid>
-      <Grid item xs={12}>
-        <ConceptCard />
-      </Grid>
+      {concepts.map((concept) => (
+        <Grid item xs={12} key={concept._id}>
+          <ConceptCard concept={concept} />
+        </Grid>
+      ))}
     </Grid>
   );
 };
