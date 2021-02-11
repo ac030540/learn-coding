@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { useStoreState } from 'easy-peasy';
+import { useHistory } from 'react-router';
+import { useStoreState, useStoreActions } from 'easy-peasy';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import { CssBaseline } from '@material-ui/core';
@@ -8,6 +9,7 @@ import AddIcon from '@material-ui/icons/Add';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import ConceptDetails from '../editConcepts/ConceptDetails';
+import CustomBackdrop from '../../common/Backdrop';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,6 +32,10 @@ const useStyles = makeStyles((theme) => ({
 
 const CreateConcepts = () => {
   const level = useStoreState((state) => state.level);
+  const [backdropOpen, setBackdropOpen] = useState(false);
+  const auth = useStoreState((state) => state.auth);
+  const setSnackbarStates = useStoreActions((actions) => actions.setSnackbarStates);
+  const history = useHistory();
   const [concept, setConcept] = useState({
     title: '',
     category: level,
@@ -38,9 +44,51 @@ const CreateConcepts = () => {
   });
   const classes = useStyles();
 
+  const handleCreateConcept = () => {
+    setBackdropOpen(true);
+    const formData = new FormData();
+    formData.append('description', concept.description);
+    formData.append('title', concept.title);
+    formData.append('category', concept.category);
+    formData.append('order', concept.order);
+    formData.append('email', auth.email);
+
+    fetch(`${process.env.REACT_APP_SERVER_URL}/concept`, {
+      method: 'POST',
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          history.push('/admin/concepts');
+          setSnackbarStates({
+            open: true,
+            severity: 'success',
+            message: 'Successfully added concept',
+          });
+        } else {
+          setBackdropOpen(false);
+          setSnackbarStates({
+            open: true,
+            severity: 'error',
+            message: 'Error adding the concept',
+          });
+        }
+      })
+      .catch(() => {
+        setBackdropOpen(false);
+        setSnackbarStates({
+          open: true,
+          severity: 'error',
+          message: 'Error adding the concept',
+        });
+      });
+  };
+
   return (
     <Container component="main" maxWidth="md">
       <CssBaseline />
+      <CustomBackdrop open={backdropOpen} />
       <div className={classes.titleWrapper}>
         <Avatar className={classes.avatar}>
           <AddIcon />
@@ -51,7 +99,12 @@ const CreateConcepts = () => {
       </div>
       <div className={classes.root}>
         <ConceptDetails concept={concept} setConcept={setConcept} />
-        <Button variant="contained" color="primary" className={classes.submit}>
+        <Button
+          variant="contained"
+          onClick={handleCreateConcept}
+          color="primary"
+          className={classes.submit}
+        >
           Create
         </Button>
       </div>

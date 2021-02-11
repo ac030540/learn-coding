@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ConceptCardsArray = ({ concepts }) => {
+const ConceptCardsArray = ({ concepts, setUpdated }) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [selectedConcept, setSelectedConcept] = useState({});
@@ -24,7 +24,6 @@ const ConceptCardsArray = ({ concepts }) => {
     // setBackdropOpen(true);
     const formData = new FormData();
     formData.append('email', auth.email);
-
     fetch(`${process.env.REACT_APP_SERVER_URL}/concept/${selectedConcept._id}`, {
       method: 'DELETE',
       body: formData,
@@ -33,6 +32,7 @@ const ConceptCardsArray = ({ concepts }) => {
       .then((data) => {
         if (data.success) {
           // setBackdropOpen(false);
+          setUpdated((value) => !value);
           setOpen(false);
           setSnackbarStates({
             open: true,

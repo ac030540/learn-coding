@@ -34,6 +34,7 @@ const Concepts = () => {
   const [concepts, setConcepts] = useState({});
   const [loading, setLoading] = useState(true);
   const level = useStoreState((state) => state.level);
+  const [updated, setUpdated] = useState(false);
   const setLevel = useStoreActions((actions) => actions.setLevel);
   const classes = useStyles();
   const history = useHistory();
@@ -50,7 +51,7 @@ const Concepts = () => {
           setLoading(false);
         }
       });
-  }, [level]);
+  }, [level, updated]);
 
   return loading ? (
     <Loading />
@@ -72,7 +73,7 @@ const Concepts = () => {
         >
           Add concept
         </Button>
-        <ConceptCardsArray concepts={concepts.data} />
+        <ConceptCardsArray setUpdated={setUpdated} concepts={concepts.data} />
       </Container>
     </div>
   );
