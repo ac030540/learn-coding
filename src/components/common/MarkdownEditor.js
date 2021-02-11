@@ -9,11 +9,13 @@ import 'highlight.js/styles/atom-one-light.css';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
+import grey from '@material-ui/core/colors/grey';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     // border-radius: '.25em',
     border: '1px solid #808080',
+    borderColor: grey[400],
     color: theme.palette.text.secondary,
     '&:hover': {
       border: '1px solid black',
