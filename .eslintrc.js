@@ -6,7 +6,7 @@ module.exports = {
     'prettier/prettier': 'error',
     'react/jsx-props-no-spreading': [0],
     'react/react-in-jsx-scope': [0],
-    'react/prop-types': [2],
+    'react/prop-types': [0],
     'react/forbid-prop-types': [2, { forbid: [] }],
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
     'react/no-did-update-set-state': 'off',

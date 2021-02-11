@@ -13,6 +13,7 @@ import Verify from './components/auth/Verify';
 import { auth as firebaseAuth } from './firebase.config';
 import Profile from './components/user/profile';
 import Settings from './components/user/settings';
+import Concepts from './components/admin/Concepts';
 
 const App = () => {
   const setAuth = useStoreActions((actions) => actions.setAuth);
@@ -89,6 +90,9 @@ const App = () => {
         </Route>
         <Route exact path="/settings">
           <Settings />
+        </Route>
+        <Route exact path="/admin/concepts">
+          <Concepts />
         </Route>
         )
       </Switch>
