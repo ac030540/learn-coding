@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ConceptDetails({ subconcept, setSubconcept }) {
+export default function ConceptDetails({ subconcept, setSubconcept, hideFileUpload }) {
   const classes = useStyles();
   const [loading, setLoading] = useState(true);
   const [options, setOptions] = useState([]);
@@ -151,6 +151,7 @@ export default function ConceptDetails({ subconcept, setSubconcept }) {
               </Grid>
               {subconcept.coding && (
                 <CodeDetails
+                  hideFileUpload={hideFileUpload}
                   subconcept={subconcept}
                   handleInputFileChange={(value) => handleEditorChange(value, 'inputFile')}
                   handleOutputFileChange={(value) => handleEditorChange(value, 'outputFile')}

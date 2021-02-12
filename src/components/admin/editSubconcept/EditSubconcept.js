@@ -9,7 +9,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import Loading from '../../common/Loading';
-import ConceptDetails from './SubconceptDetails';
+import SubconceptDetails from './SubconceptDetails';
 import CustomBackdrop from '../../common/Backdrop';
 
 const useStyles = makeStyles((theme) => ({
@@ -31,9 +31,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const EditConcepts = () => {
-  const [concept, setConcept] = useState({});
-  const { _id } = useParams();
+const EditSubconcept = () => {
+  const [subconcept, setSubconcept] = useState({});
+  const { subconceptId } = useParams();
   const [loading, setLoading] = useState(true);
   const [backdropOpen, setBackdropOpen] = useState(false);
   const auth = useStoreState((state) => state.auth);
@@ -45,14 +45,13 @@ const EditConcepts = () => {
   // console.log(concepts);
   useEffect(() => {
     // fetching the data of the concepts
-    fetch(`${process.env.REACT_APP_SERVER_URL}/concept/${_id}`, {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/subConcept/${subconceptId}`, {
       method: 'GET',
     })
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
-          setConcept(data.data);
-          // setConcepts(data);
+          setSubconcept(data.data);
           setLoading(false);
         }
       });
@@ -61,13 +60,13 @@ const EditConcepts = () => {
   const handleEditConcept = () => {
     setBackdropOpen(true);
     const formData = new FormData();
-    formData.append('description', concept.description);
-    formData.append('title', concept.title);
-    formData.append('category', concept.category);
-    formData.append('order', concept.order);
+    formData.append('description', subconcept.description);
+    formData.append('title', subconcept.title);
+    formData.append('category', subconcept.category);
+    formData.append('order', subconcept.order);
     formData.append('email', auth.email);
 
-    fetch(`${process.env.REACT_APP_SERVER_URL}/concept/${_id}`, {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/concept/${subconceptId}`, {
       method: 'PUT',
       body: formData,
     })
@@ -116,7 +115,11 @@ const EditConcepts = () => {
                 Edit Concept
               </Typography>
             </div>
-            <ConceptDetails concept={concept} setConcept={setConcept} />
+            <SubconceptDetails
+              hideFileUpload
+              subconcept={subconcept}
+              setSubconcept={setSubconcept}
+            />
             <Button
               variant="contained"
               onClick={handleEditConcept}
@@ -132,4 +135,4 @@ const EditConcepts = () => {
   );
 };
 
-export default EditConcepts;
+export default EditSubconcept;
