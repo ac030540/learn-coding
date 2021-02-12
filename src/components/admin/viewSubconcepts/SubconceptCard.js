@@ -14,27 +14,27 @@ const useStyles = makeStyles({
   },
 });
 
-const ConceptCard = ({ concept, setOpen, setSelectedConcept }) => {
+const SubconceptCard = ({ subconcept, setOpen, setSelectedSubconcept }) => {
   const classes = useStyles();
   const history = useHistory();
   const handleEdit = () => {
-    history.push(`/admin/concepts/${concept._id}/edit`);
+    history.push(`/admin/subconcepts/${subconcept._id}/edit`);
   };
 
   const handleDelete = () => {
-    setSelectedConcept(concept);
+    setSelectedSubconcept(subconcept);
     setOpen(true);
   };
 
   return (
     <Card className={classes.root}>
-      <CardActionArea onClick={() => history.push(`/admin/concepts/${concept._id}`)}>
+      <CardActionArea onClick={() => history.push(`/admin/subconcepts/${subconcept._id}`)}>
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            {concept.title}
+            {subconcept.title}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            {concept.description}
+            {subconcept.description}
           </Typography>
         </CardContent>
       </CardActionArea>
@@ -50,4 +50,4 @@ const ConceptCard = ({ concept, setOpen, setSelectedConcept }) => {
   );
 };
 
-export default ConceptCard;
+export default SubconceptCard;
