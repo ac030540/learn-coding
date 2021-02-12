@@ -42,7 +42,7 @@ const CreateSubconcept = () => {
     story: '',
     hint: '',
     codingTemplate: '',
-    refereceId: [],
+    referencesId: [],
     order: '',
     coding: true,
     answer: '',
