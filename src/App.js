@@ -17,6 +17,8 @@ import Concepts from './components/admin/viewConcepts/Concepts';
 import EditConcepts from './components/admin/editConcepts/EditConcepts';
 import CreateConcepts from './components/admin/createConcepts/CreateConcepts';
 import Subconcepts from './components/admin/viewSubconcepts/Subconcepts';
+import CreateSubconcept from './components/admin/createSubconcept/CreateSubconcept';
+import EditSubconcept from './components/admin/editSubconcept/EditSubconcept';
 
 const App = () => {
   const setAuth = useStoreActions((actions) => actions.setAuth);
@@ -105,6 +107,12 @@ const App = () => {
         </Route>
         <Route exact path="/admin/concepts/:conceptId">
           <Subconcepts />
+        </Route>
+        <Route exact path="/admin/concepts/:conceptId/create">
+          <CreateSubconcept />
+        </Route>
+        <Route exact path="/admin/subconcepts/:conceptId/edit">
+          <EditSubconcept />
         </Route>
         )
       </Switch>
