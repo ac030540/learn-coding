@@ -5,4 +5,9 @@
 
 .rc-md-editor {
   border: none !important;
+  background: none !important;
+}
+
+.rc-md-editor .editor-container .sec-md .input {
+  background: none !important;
 }

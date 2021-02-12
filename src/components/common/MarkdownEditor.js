@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     },
     '&:focus-within': {
       color: theme.palette.primary.main,
-      border: '1.5px solid #3f51b5',
+      border: '1px solid #3f51b5',
       borderColor: theme.palette.primary,
     },
   },

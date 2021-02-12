@@ -68,6 +68,25 @@ export default function ConceptDetails({ subconcept, setSubconcept }) {
       story: value,
     }));
   };
+  const handleAnswerChange = (value) => {
+    setSubconcept((prev) => ({
+      ...prev,
+      answer: value,
+    }));
+  };
+  const handleInputFileChange = (value) => {
+    setSubconcept((prev) => ({
+      ...prev,
+      inputFile: value,
+    }));
+  };
+
+  const handleOutputFileChange = (value) => {
+    setSubconcept((prev) => ({
+      ...prev,
+      outputFile: value,
+    }));
+  };
 
   return (
     <div className={classes.paper}>
@@ -144,7 +163,14 @@ export default function ConceptDetails({ subconcept, setSubconcept }) {
               </Select>
             </FormControl>
           </Grid>
-          {subconcept.coding && <CodeDetails subconcept={subconcept} />}
+          {subconcept.coding && (
+            <CodeDetails
+              subconcept={subconcept}
+              handleInputFileChange={handleInputFileChange}
+              handleOutputFileChange={handleOutputFileChange}
+              handleAnswerChange={handleAnswerChange}
+            />
+          )}
         </Grid>
       </form>
     </div>
