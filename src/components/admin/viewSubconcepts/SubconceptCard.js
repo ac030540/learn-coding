@@ -6,7 +6,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { useHistory } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 
 const useStyles = makeStyles({
   root: {
@@ -17,8 +17,9 @@ const useStyles = makeStyles({
 const SubconceptCard = ({ subconcept, setOpen, setSelectedSubconcept }) => {
   const classes = useStyles();
   const history = useHistory();
+  const { conceptId } = useParams();
   const handleEdit = () => {
-    history.push(`/admin/subconcepts/${subconcept._id}/edit`);
+    history.push(`/admin/concepts/${conceptId}/subconcepts/${subconcept._id}/edit`);
   };
 
   const handleDelete = () => {

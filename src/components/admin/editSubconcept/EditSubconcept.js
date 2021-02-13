@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 
 const EditSubconcept = () => {
   const [subconcept, setSubconcept] = useState({});
-  const { subconceptId } = useParams();
+  const { subconceptId, conceptId } = useParams();
   const [loading, setLoading] = useState(true);
   const [backdropOpen, setBackdropOpen] = useState(false);
   const auth = useStoreState((state) => state.auth);
@@ -60,31 +60,37 @@ const EditSubconcept = () => {
   const handleEditConcept = () => {
     setBackdropOpen(true);
     const formData = new FormData();
-    formData.append('description', subconcept.description);
     formData.append('title', subconcept.title);
-    formData.append('category', subconcept.category);
+    formData.append('description', subconcept.description);
+    formData.append('story', subconcept.story);
+    formData.append('hint', subconcept.hint);
+    formData.append('codingTemplate', subconcept.codingTemplate);
+    formData.append('answer', subconcept.answer);
+    formData.append('conceptId', conceptId);
     formData.append('order', subconcept.order);
+    formData.append('coding', subconcept.coding);
     formData.append('email', auth.email);
+    formData.append('referencesId', JSON.stringify(subconcept.referencesId));
 
-    fetch(`${process.env.REACT_APP_SERVER_URL}/concept/${subconceptId}`, {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/subConcept/${subconceptId}`, {
       method: 'PUT',
       body: formData,
     })
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
-          history.push('/admin/concepts');
+          history.push(`/admin/concepts/${conceptId}`);
           setSnackbarStates({
             open: true,
             severity: 'success',
-            message: 'Successfully edited concept',
+            message: 'Successfully edited subconcept',
           });
         } else {
           setBackdropOpen(false);
           setSnackbarStates({
             open: true,
             severity: 'error',
-            message: 'Error editing the concept',
+            message: 'Error editing the subconcept',
           });
         }
       })
@@ -93,7 +99,7 @@ const EditSubconcept = () => {
         setSnackbarStates({
           open: true,
           severity: 'error',
-          message: 'Error editing the concept',
+          message: 'Error editing the subconcept',
         });
       });
   };

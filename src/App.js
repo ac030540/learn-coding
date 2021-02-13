@@ -111,7 +111,7 @@ const App = () => {
         <Route exact path="/admin/concepts/:conceptId/create">
           <CreateSubconcept />
         </Route>
-        <Route exact path="/admin/subconcepts/:subconceptId/edit">
+        <Route exact path="/admin/concepts/:conceptId/subconcepts/:subconceptId/edit">
           <EditSubconcept />
         </Route>
         )

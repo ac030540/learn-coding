@@ -8,6 +8,7 @@ export default function FixedTags({ title, value, setValue, options }) {
   return (
     <Autocomplete
       multiple
+      getOptionSelected={(option, values) => option._id === values._id}
       id={title}
       value={value}
       onChange={(event, newValue) => {
@@ -25,7 +26,7 @@ export default function FixedTags({ title, value, setValue, options }) {
         ))
       }
       renderInput={(params) => (
-        <TextField {...params} label={title} variant="outlined" placeholder="Favorites" />
+        <TextField {...params} label={title} variant="outlined" placeholder="Start typing" />
       )}
     />
   );
