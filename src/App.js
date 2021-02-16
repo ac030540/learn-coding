@@ -19,6 +19,7 @@ import CreateConcepts from './components/admin/createConcepts/CreateConcepts';
 import Subconcepts from './components/admin/viewSubconcepts/Subconcepts';
 import CreateSubconcept from './components/admin/createSubconcept/CreateSubconcept';
 import EditSubconcept from './components/admin/editSubconcept/EditSubconcept';
+// import ReactAceCodeEditor from './components/common/ReactAceCodeEditor';
 
 const App = () => {
   const setAuth = useStoreActions((actions) => actions.setAuth);
@@ -26,6 +27,8 @@ const App = () => {
   const [loading, setLoading] = useState(true);
   const history = useHistory();
   const location = useLocation();
+
+  // const [value, setValue] = useState('print("Hello World")');
 
   // This effect automatically updates the auth state when there is change in the firebase auth
   useEffect(() => {
@@ -74,6 +77,7 @@ const App = () => {
   ) : (
     <>
       <CustomAppBar />
+      {/* <ReactAceCodeEditor value={value} setValue={setValue} language="python" /> */}
       <Switch>
         <Route exact path="/">
           <Homepage />
