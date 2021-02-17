@@ -4,6 +4,7 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import { useStoreActions } from 'easy-peasy';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -44,31 +45,32 @@ const useStyles = makeStyles((theme) => ({
 const levels = [
   {
     title: 'Beginner',
+    value: 'Beginner',
     progress: '0',
     description: ['Basic concepts', 'Loops', 'Arrays', 'conditionals'],
-    path: '/beginner',
   },
   {
     title: 'Advanced',
+    value: 'Advanced',
     progress: '0',
     description: ['Intermediate concepts', 'OOPM', 'Functional programming', 'High level concepts'],
-    path: '/advanced',
   },
   {
     title: 'Expert',
+    value: 'Expert',
     progress: '0',
     description: ['Expert level concepts', 'Time complexity', 'Space complexity', 'Code debugging'],
-    path: '/expert',
   },
 ];
 
 const Homepage = () => {
   const classes = useStyles();
+  const setLevel = useStoreActions((actions) => actions.setLevel);
   useRedirectUnsignedUser();
   const history = useHistory();
-
-  const handleButtonClick = (path) => {
-    history.push(path);
+  const handleCardClick = (value) => {
+    setLevel(value);
+    history.push('/concepts');
   };
 
   return (
@@ -90,7 +92,7 @@ const Homepage = () => {
             // Enterprise card is full width at sm breakpoint
             <Grid item key={level.title} xs={12} sm={6} md={4}>
               <Card>
-                <CardActionArea onClick={() => handleButtonClick(level.path)}>
+                <CardActionArea onClick={() => handleCardClick(level.value)}>
                   <CardHeader
                     title={level.title}
                     subheader={level.subheader}

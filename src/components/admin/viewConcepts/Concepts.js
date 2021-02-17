@@ -52,7 +52,7 @@ const Concepts = () => {
         }
       });
   }, [level, updated]);
-  console.log(level);
+
   return loading ? (
     <Loading />
   ) : (

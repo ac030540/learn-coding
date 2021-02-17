@@ -19,6 +19,7 @@ import CreateConcepts from './components/admin/createConcepts/CreateConcepts';
 import Subconcepts from './components/admin/viewSubconcepts/Subconcepts';
 import CreateSubconcept from './components/admin/createSubconcept/CreateSubconcept';
 import EditSubconcept from './components/admin/editSubconcept/EditSubconcept';
+import UserConcepts from './components/concepts/UserConcepts';
 // import ReactAceCodeEditor from './components/common/ReactAceCodeEditor';
 
 const App = () => {
@@ -99,6 +100,9 @@ const App = () => {
         </Route>
         <Route exact path="/settings">
           <Settings />
+        </Route>
+        <Route exact path="/concepts">
+          <UserConcepts />
         </Route>
         <Route exact path="/admin/concepts">
           <Concepts />
