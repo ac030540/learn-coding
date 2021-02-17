@@ -25,7 +25,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ConceptDetails({ subconcept, setSubconcept, hideFileUpload }) {
+export default function ConceptDetails({
+  subconcept,
+  setSubconcept,
+  hideFileUpload,
+  language,
+  setLanguage,
+}) {
   const classes = useStyles();
   const [loading, setLoading] = useState(true);
   const [options, setOptions] = useState([]);
@@ -66,6 +72,21 @@ export default function ConceptDetails({ subconcept, setSubconcept, hideFileUplo
         <div className={classes.paper}>
           <form className={classes.form} noValidate>
             <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <FormControl variant="outlined" className={classes.formControl}>
+                  <InputLabel id="language-selector">Language</InputLabel>
+                  <Select
+                    labelId="language-selector"
+                    id="language-select-outlined"
+                    value={language}
+                    onChange={(event) => setLanguage(event.target.value)}
+                    label="Language"
+                  >
+                    <MenuItem value="python">Python</MenuItem>
+                    <MenuItem value="java">Java</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
               <Grid item xs={12}>
                 <TextField
                   variant="outlined"

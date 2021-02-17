@@ -37,6 +37,7 @@ const CreateSubconcept = () => {
   const { conceptId } = useParams();
   const setSnackbarStates = useStoreActions((actions) => actions.setSnackbarStates);
   const history = useHistory();
+  const [language, setLanguage] = useState('python');
   const [subconcept, setSubconcept] = useState({
     title: '',
     description: '',
@@ -69,7 +70,7 @@ const CreateSubconcept = () => {
     formData.append('email', auth.email);
     formData.append('referencesId', JSON.stringify(subconcept.referencesId));
 
-    fetch(`${process.env.REACT_APP_SERVER_URL}/subConcept`, {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/subConcept?language=${language}`, {
       method: 'POST',
       body: formData,
     })
@@ -114,7 +115,12 @@ const CreateSubconcept = () => {
         </Typography>
       </div>
       <div className={classes.root}>
-        <SubconceptDetails subconcept={subconcept} setSubconcept={setSubconcept} />
+        <SubconceptDetails
+          subconcept={subconcept}
+          setSubconcept={setSubconcept}
+          language={language}
+          setLanguage={setLanguage}
+        />
         <Button
           variant="contained"
           onClick={handleCreateConcept}

@@ -36,6 +36,7 @@ const EditSubconcept = () => {
   const { subconceptId, conceptId } = useParams();
   const [loading, setLoading] = useState(true);
   const [backdropOpen, setBackdropOpen] = useState(false);
+  const [language, setLanguage] = useState('python');
   const auth = useStoreState((state) => state.auth);
   const setSnackbarStates = useStoreActions((actions) => actions.setSnackbarStates);
   const history = useHistory();
@@ -43,7 +44,9 @@ const EditSubconcept = () => {
   // const setLevel = useStoreActions((actions) => actions.setLevel);
   const classes = useStyles();
   // console.log(concepts);
+  // console.log(subconcept, language);
   useEffect(() => {
+    setLoading(true);
     // fetching the data of the concepts
     fetch(`${process.env.REACT_APP_SERVER_URL}/subConcept/${subconceptId}`, {
       method: 'GET',
@@ -51,11 +54,15 @@ const EditSubconcept = () => {
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
-          setSubconcept(data.data);
+          if (language === 'python') {
+            setSubconcept({ ...data.data, ...data.data.python });
+          } else {
+            setSubconcept({ ...data.data, ...data.data.java });
+          }
           setLoading(false);
         }
       });
-  }, []);
+  }, [language]);
 
   const handleEditConcept = () => {
     setBackdropOpen(true);
@@ -72,7 +79,7 @@ const EditSubconcept = () => {
     formData.append('email', auth.email);
     formData.append('referencesId', JSON.stringify(subconcept.referencesId));
 
-    fetch(`${process.env.REACT_APP_SERVER_URL}/subConcept/${subconceptId}`, {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/subConcept/${subconceptId}?language=${language}`, {
       method: 'PUT',
       body: formData,
     })
@@ -125,6 +132,8 @@ const EditSubconcept = () => {
               hideFileUpload
               subconcept={subconcept}
               setSubconcept={setSubconcept}
+              language={language}
+              setLanguage={setLanguage}
             />
             <Button
               variant="contained"

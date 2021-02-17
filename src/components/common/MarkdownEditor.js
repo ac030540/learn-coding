@@ -1,7 +1,6 @@
 import * as React from 'react';
 import MarkdownIt from 'markdown-it';
 import MdEditor from 'react-markdown-editor-lite';
-import PropTypes from 'prop-types';
 // import style manually
 import 'react-markdown-editor-lite/lib/index.css';
 import hljs from 'highlight.js';
@@ -92,11 +91,6 @@ const Editor = ({ value, setValue, title }) => {
       />
     </Paper>
   );
-};
-
-Editor.propTypes = {
-  value: PropTypes.string.isRequired,
-  setValue: PropTypes.func.isRequired,
 };
 
 export default Editor;
