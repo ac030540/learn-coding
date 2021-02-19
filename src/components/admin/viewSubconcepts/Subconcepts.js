@@ -13,6 +13,7 @@ import { useHistory, useParams } from 'react-router';
 import Loading from '../../common/Loading';
 import Breadcrumbs from '../../common/Breadcrums';
 import SubconceptCardsArray from './SubconceptCardsArray';
+import UserSubconceptsCardArray from '../../subconcepts/UserSubconceptsCardArray';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Subconcepts = () => {
+const Subconcepts = ({ userRoute }) => {
   const [subconcepts, setSubconcepts] = useState({});
   const [loading, setLoading] = useState(true);
   const level = useStoreState((state) => state.level);
@@ -62,7 +63,8 @@ const Subconcepts = () => {
     {
       text: level,
       onClick: () => {
-        history.push('/admin/concepts');
+        if (!userRoute) history.push('/admin/concepts');
+        else history.push('/concepts');
       },
     },
     {
@@ -99,20 +101,26 @@ const Subconcepts = () => {
             Sub-concepts
           </Typography>
         </div>
-        <Button
-          variant="outlined"
-          color="primary"
-          size="small"
-          className={classes.button}
-          startIcon={<AddIcon />}
-          onClick={() => history.push(`/admin/concepts/${conceptId}/create`)}
-        >
-          Add subconcept
-        </Button>
+        {!userRoute && (
+          <Button
+            variant="outlined"
+            color="primary"
+            size="small"
+            className={classes.button}
+            startIcon={<AddIcon />}
+            onClick={() => history.push(`/admin/concepts/${conceptId}/create`)}
+          >
+            Add subconcept
+          </Button>
+        )}
         <Box className={classes.breadcrumbs}>
           <Breadcrumbs data={breadcrumbsData} />
         </Box>
-        <SubconceptCardsArray setUpdated={setUpdated} subconcepts={subconcepts.data.result} />
+        {userRoute ? (
+          <UserSubconceptsCardArray subconcepts={subconcepts.data.result} />
+        ) : (
+          <SubconceptCardsArray setUpdated={setUpdated} subconcepts={subconcepts.data.result} />
+        )}
       </Container>
     </div>
   );
