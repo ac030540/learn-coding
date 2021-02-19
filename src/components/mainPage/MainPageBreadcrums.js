@@ -7,7 +7,7 @@ import Breadcrumbs from '../common/Breadcrums';
 const useStyles = makeStyles((theme) => ({
   breadcrumbs: {
     marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2),
+    marginBottom: theme.spacing(3),
   },
 }));
 

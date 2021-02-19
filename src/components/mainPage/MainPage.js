@@ -6,11 +6,15 @@ import Container from '@material-ui/core/Container';
 import Loading from '../common/Loading';
 import MainPageBreadcrums from './MainPageBreadcrums';
 import LanguageSelector from './LanguageSelector';
+import Content from './Content';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     // marginTop: theme.spacing(2),
     // marginBottom: theme.spacing(2),
+  },
+  content: {
+    marginTop: theme.spacing(3),
   },
 }));
 
@@ -44,6 +48,9 @@ const MainPage = () => {
           <Container component="main" maxWidth="xl">
             <MainPageBreadcrums subconcept={subconcept} />
             <LanguageSelector language={language} setLanguage={setLanguage} />
+            <Box className={classes.content}>
+              <Content language={language} subconcept={subconcept} />
+            </Box>
           </Container>
         </Box>
       )}
