@@ -1,7 +1,7 @@
 import Concepts from '../admin/viewConcepts/Concepts';
 
 const UserConcepts = () => {
-  return <Concepts />;
+  return <Concepts userRoute />;
 };
 
 export default UserConcepts;

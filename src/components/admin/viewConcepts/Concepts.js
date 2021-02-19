@@ -10,6 +10,7 @@ import { useHistory } from 'react-router';
 import LevelSelector from './LevelSelector';
 import ConceptCardsArray from './ConceptCardsArray';
 import Loading from '../../common/Loading';
+import UserConceptCardsArray from '../../concepts/UserConceptsCardArray';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Concepts = () => {
+const Concepts = ({ userRoute }) => {
   const [concepts, setConcepts] = useState({});
   const [loading, setLoading] = useState(true);
   const level = useStoreState((state) => state.level);
@@ -63,17 +64,23 @@ const Concepts = () => {
           Concepts
         </Typography>
         <LevelSelector level={level} setLevel={setLevel} />
-        <Button
-          variant="outlined"
-          color="primary"
-          size="small"
-          className={classes.button}
-          startIcon={<AddIcon />}
-          onClick={() => history.push('/admin/concepts/create')}
-        >
-          Add concept
-        </Button>
-        <ConceptCardsArray setUpdated={setUpdated} concepts={concepts.data} />
+        {userRoute ? (
+          <UserConceptCardsArray concepts={concepts.data} />
+        ) : (
+          <>
+            <Button
+              variant="outlined"
+              color="primary"
+              size="small"
+              className={classes.button}
+              startIcon={<AddIcon />}
+              onClick={() => history.push('/admin/concepts/create')}
+            >
+              Add concept
+            </Button>
+            <ConceptCardsArray setUpdated={setUpdated} concepts={concepts.data} />
+          </>
+        )}
       </Container>
     </div>
   );
