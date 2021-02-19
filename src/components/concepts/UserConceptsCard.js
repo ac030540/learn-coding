@@ -4,6 +4,7 @@ import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import { useHistory } from 'react-router';
 
 const useStyles = makeStyles({
@@ -19,6 +20,7 @@ const ConceptCard = ({ concept }) => {
   return (
     <Card className={classes.root}>
       <CardActionArea onClick={() => history.push(`/concepts/${concept._id}`)}>
+        <LinearProgress variant="determinate" value="30" />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
             {concept.title}

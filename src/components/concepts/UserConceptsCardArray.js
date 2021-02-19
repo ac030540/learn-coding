@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
 
 const UserConceptCardsArray = ({ concepts }) => {
   const classes = useStyles();
-
+  console.log(concepts);
   return (
     <>
       <Grid className={classes.root} container spacing={3}>
