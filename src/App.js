@@ -21,6 +21,7 @@ import CreateSubconcept from './components/admin/createSubconcept/CreateSubconce
 import EditSubconcept from './components/admin/editSubconcept/EditSubconcept';
 import UserConcepts from './components/concepts/UserConcepts';
 import UserSubconcepts from './components/subconcepts/UserSubconcepts';
+import MainPage from './components/mainPage/MainPage';
 // import ReactAceCodeEditor from './components/common/ReactAceCodeEditor';
 
 const App = () => {
@@ -105,11 +106,17 @@ const App = () => {
         <Route exact path="/concepts">
           <UserConcepts />
         </Route>
-        <Route exact path="/admin/concepts">
-          <Concepts />
+        <Route exact path="/concepts/:conceptId">
+          <UserSubconcepts />
         </Route>
         <Route exact path="/concepts/:conceptId">
           <UserSubconcepts />
+        </Route>
+        <Route exact path="/subconcepts/:subconceptId">
+          <MainPage />
+        </Route>
+        <Route exact path="/admin/concepts">
+          <Concepts />
         </Route>
         <Route exact path="/admin/concepts/:_id/edit">
           <EditConcepts />

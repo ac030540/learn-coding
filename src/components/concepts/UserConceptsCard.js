@@ -20,7 +20,7 @@ const ConceptCard = ({ concept }) => {
   return (
     <Card className={classes.root}>
       <CardActionArea onClick={() => history.push(`/concepts/${concept._id}`)}>
-        <LinearProgress variant="determinate" value="30" />
+        <LinearProgress variant="determinate" value={30} />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
             {concept.title}
