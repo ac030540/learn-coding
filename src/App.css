@@ -8,6 +8,18 @@
   background: none !important;
 }
 
+.rc-md-editor.full > .rc-md-navigation {
+  background: #fafafa !important;
+}
+
 .rc-md-editor .editor-container .sec-md .input {
   background: none !important;
+}
+
+.rc-md-editor.full .editor-container .sec-md .input {
+  background: #fafafa !important;
+}
+
+.rc-md-editor.full .editor-container .sec-html {
+  background: #fafafa !important;
 }
