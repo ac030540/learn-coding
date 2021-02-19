@@ -87,8 +87,8 @@ const Verify = () => {
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <Typography component="h1" variant="body2" className={classes.resetText}>
-                  In order to access our services you need to erify your email address. We will send
-                  you an email which will guide you through the verification process.
+                  In order to access our services you need to verify your email address. We will
+                  send you an email which will guide you through the verification process.
                 </Typography>
               </Grid>
             </Grid>

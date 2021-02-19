@@ -5,6 +5,7 @@ import { CssBaseline, Box } from '@material-ui/core';
 import Container from '@material-ui/core/Container';
 import Loading from '../common/Loading';
 import MainPageBreadcrums from './MainPageBreadcrums';
+import LanguageSelector from './LanguageSelector';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -16,6 +17,7 @@ const useStyles = makeStyles(() => ({
 const MainPage = () => {
   const [loading, setLoading] = useState(true);
   const [subconcept, setSubconcept] = useState({});
+  const [language, setLanguage] = useState('python');
   const { subconceptId } = useParams();
   const classes = useStyles();
 
@@ -41,6 +43,7 @@ const MainPage = () => {
         <Box className={classes.root}>
           <Container component="main" maxWidth="xl">
             <MainPageBreadcrums subconcept={subconcept} />
+            <LanguageSelector language={language} setLanguage={setLanguage} />
           </Container>
         </Box>
       )}

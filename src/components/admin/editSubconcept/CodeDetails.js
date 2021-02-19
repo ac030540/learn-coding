@@ -1,4 +1,5 @@
 import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
 import FileDisplayer from '../../common/FileDisplayer';
 import FileUpload from '../../common/FileUpload';
 import MarkdownEditor from '../../common/MarkdownEditor';
@@ -6,12 +7,26 @@ import MarkdownEditor from '../../common/MarkdownEditor';
 const CodeDetails = ({
   subconcept,
   hideFileUpload,
+  handleTextChange,
   handleAnswerChange,
   handleInputFileChange,
   handleOutputFileChange,
 }) => {
   return (
     <>
+      <Grid item xs={12}>
+        <TextField
+          variant="outlined"
+          required
+          value={subconcept.hint}
+          onChange={(event) => handleTextChange(event, 'hint')}
+          fullWidth
+          id="hint"
+          label="Hint"
+          name="hint"
+          autoComplete="hint"
+        />
+      </Grid>
       <Grid item xs={12}>
         <MarkdownEditor value={subconcept.answer} setValue={handleAnswerChange} title="Solution" />
       </Grid>

@@ -115,19 +115,6 @@ export default function ConceptDetails({
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  value={subconcept.hint}
-                  onChange={(event) => handleTextChange(event, 'hint')}
-                  fullWidth
-                  id="hint"
-                  label="Hint"
-                  name="hint"
-                  autoComplete="hint"
-                />
-              </Grid>
-              <Grid item xs={12}>
                 <MarkdownEditor
                   value={subconcept.codingTemplate}
                   setValue={(value) => handleEditorChange(value, 'codingTemplate')}
@@ -174,6 +161,7 @@ export default function ConceptDetails({
                 <CodeDetails
                   hideFileUpload={hideFileUpload}
                   subconcept={subconcept}
+                  handleTextChange={handleTextChange}
                   handleInputFileChange={(value) => handleEditorChange(value, 'inputFile')}
                   handleOutputFileChange={(value) => handleEditorChange(value, 'outputFile')}
                   handleAnswerChange={(value) => handleEditorChange(value, 'answer')}
