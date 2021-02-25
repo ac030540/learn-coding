@@ -5,7 +5,7 @@ import ReferencesBlock from './ReferencesBlock';
 
 const Content = ({ language, subconcept }) => {
   return (
-    <Grid container spacing={3}>
+    <Grid container spacing={2}>
       <Grid item xs={12}>
         <DataBlock title="Description" content={subconcept.description} />
       </Grid>

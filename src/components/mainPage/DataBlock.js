@@ -1,5 +1,5 @@
 import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
+import Card from '@material-ui/core/Card';
 import { makeStyles } from '@material-ui/core/styles';
 import { Divider } from '@material-ui/core';
 import { grey } from '@material-ui/core/colors';
@@ -12,21 +12,21 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     padding: theme.spacing(2),
-    paddingTop: theme.spacing(1.5),
-    paddingBottom: theme.spacing(1.5),
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(1),
   },
 }));
 
 const DataBlock = ({ title, content }) => {
   const classes = useStyles();
   return (
-    <Box className={classes.root}>
+    <Card className={classes.root}>
       <Typography className={classes.title} variant="h5" component="h2">
         {title}
       </Typography>
-      <Divider />
+      <Divider light />
       <MarkdownViewer value={content} />
-    </Box>
+    </Card>
   );
 };
 

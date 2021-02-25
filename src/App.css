@@ -23,3 +23,7 @@
 .rc-md-editor.full .editor-container .sec-html {
   background: #fafafa !important;
 }
+
+.ace_print-margin {
+  visibility: hidden !important;
+}

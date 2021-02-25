@@ -6,7 +6,7 @@ import Select from '@material-ui/core/Select';
 
 const useStyles = makeStyles(() => ({
   formControl: {
-    width: '100%',
+    width: '100px',
   },
 }));
 

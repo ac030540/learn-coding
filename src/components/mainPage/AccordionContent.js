@@ -3,7 +3,7 @@ import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
-import { Divider } from '@material-ui/core';
+import { Divider, Card } from '@material-ui/core';
 import { grey } from '@material-ui/core/colors';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MarkdownViewer from '../common/MarkdownViewer';
@@ -28,22 +28,24 @@ const useStyles = makeStyles((theme) => ({
 const AccordionContent = ({ title, content }) => {
   const classes = useStyles();
   return (
-    <Accordion className={classes.root}>
-      <AccordionSummary
-        className={classes.accordionSummary}
-        expandIcon={<ExpandMoreIcon />}
-        aria-controls={title}
-        id={title}
-      >
-        <Typography variant="h5" component="h2" className={classes.title}>
-          {title}
-        </Typography>
-      </AccordionSummary>
-      <Divider />
-      <AccordionDetails>
-        <MarkdownViewer value={content} />
-      </AccordionDetails>
-    </Accordion>
+    <Card>
+      <Accordion className={classes.root}>
+        <AccordionSummary
+          className={classes.accordionSummary}
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls={title}
+          id={title}
+        >
+          <Typography variant="h5" component="h2" className={classes.title}>
+            {title}
+          </Typography>
+        </AccordionSummary>
+        <Divider light />
+        <AccordionDetails>
+          <MarkdownViewer value={content} />
+        </AccordionDetails>
+      </Accordion>
+    </Card>
   );
 };
 
