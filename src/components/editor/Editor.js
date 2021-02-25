@@ -10,7 +10,8 @@ import LanguageSelector from '../mainPage/LanguageSelector';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    margin: theme.spacing(2),
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
   },
   titleWrapper: {
     display: 'flex',

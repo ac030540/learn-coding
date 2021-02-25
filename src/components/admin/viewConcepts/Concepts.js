@@ -14,7 +14,8 @@ import UserConceptCardsArray from '../../concepts/UserConceptsCardArray';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    margin: theme.spacing(2),
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
   },
   title: {
     marginTop: theme.spacing(3),
