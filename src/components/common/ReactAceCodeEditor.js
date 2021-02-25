@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ReactAceCodeEditor = ({
-  coding,
+  showSubmit,
   language,
   placeholder = 'Placeholder Text',
   value,
@@ -81,7 +81,7 @@ const ReactAceCodeEditor = ({
           >
             run
           </Button>
-          {coding && (
+          {showSubmit && (
             <Button
               variant="outlined"
               color="secondary"

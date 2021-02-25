@@ -73,7 +73,7 @@ const MainPage = ({ adminRoute }) => {
               <Grid item xs={12} sm={6}>
                 <Box className={classes.editor}>
                   <ReactAceCodeEditor
-                    coding={subconcept.coding}
+                    showSubmit={subconcept.coding}
                     language={language}
                     value={code}
                     setValue={setCode}

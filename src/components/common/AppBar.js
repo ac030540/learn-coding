@@ -8,6 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Button from '@material-ui/core/Button';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import DeveloperMode from '@material-ui/icons/DeveloperMode';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { useStoreState, useStoreActions } from 'easy-peasy';
@@ -90,6 +91,9 @@ const CustomAppBar = () => {
           </Typography>
           {auth && auth.uid ? (
             <div>
+              <IconButton onClick={() => history.push('/editor')} color="inherit">
+                <DeveloperMode />
+              </IconButton>
               <IconButton
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
