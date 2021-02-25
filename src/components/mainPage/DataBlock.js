@@ -17,16 +17,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DataBlock = ({ title, content }) => {
+const DataBlock = ({ title, content = '' }) => {
   const classes = useStyles();
   return (
-    <Card className={classes.root}>
-      <Typography className={classes.title} variant="h5" component="h2">
-        {title}
-      </Typography>
-      <Divider light />
-      <MarkdownViewer value={content} />
-    </Card>
+    content.length !== 0 && (
+      <Card className={classes.root}>
+        <Typography className={classes.title} variant="h5" component="h2">
+          {title}
+        </Typography>
+        <Divider light />
+        <MarkdownViewer value={content} />
+      </Card>
+    )
   );
 };
 

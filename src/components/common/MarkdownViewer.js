@@ -9,7 +9,7 @@ import 'highlight.js/styles/atom-one-light.css';
 // Register plugins if required
 // MdEditor.use(YOUR_PLUGINS_HERE);
 
-const Viewer = ({ value }) => {
+const Viewer = ({ value = '' }) => {
   // Initialize a markdown parser
   const mdParser = new MarkdownIt({
     html: true,

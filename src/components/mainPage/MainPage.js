@@ -40,9 +40,11 @@ const MainPage = ({ adminRoute }) => {
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
+          if (language === 'python')
+            setCode(data.data.python.codingTemplate ? data.data.python.codingTemplate : '');
+          else setCode(data.data.java.codingTemplate ? data.data.java.codingTemplate : '');
           setSubconcept(data.data);
-          if (language === 'python') setCode(data.data.python.codingTemplate);
-          else setCode(data.data.java.codingTemplate);
+          // console.log('updated data');
           setLoading(false);
         }
       });

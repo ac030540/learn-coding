@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 const ReactAceCodeEditor = ({
   showSubmit,
   language,
-  placeholder = 'Placeholder Text',
+  // placeholder = 'Placeholder Text',
   value,
   setValue,
 }) => {
@@ -47,7 +47,7 @@ const ReactAceCodeEditor = ({
       <Grid container>
         <Grid item xs={12}>
           <AceEditor
-            placeholder={placeholder}
+            // placeholder={placeholder}
             mode={language}
             theme="monokai"
             name="blah2"
