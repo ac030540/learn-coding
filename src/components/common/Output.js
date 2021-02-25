@@ -24,13 +24,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const LanguageSelector = ({
-  output = `using namespace std;
-int main () {
-	}
-	return 0;
-}`,
-}) => {
+const LanguageSelector = ({ output }) => {
   const classes = useStyles();
   return (
     <Box className={classes.root}>

@@ -23,6 +23,7 @@ import UserSubconcepts from './components/subconcepts/UserSubconcepts';
 import MainPage from './components/mainPage/MainPage';
 import AdminMainPage from './components/admin/Subconcept';
 import Editor from './components/editor/Editor';
+import ScrollToTop from './components/common/ScrollToTop';
 // import ReactAceCodeEditor from './components/common/ReactAceCodeEditor';
 
 const App = () => {
@@ -140,9 +141,9 @@ const App = () => {
         <Route exact path="/editor">
           <Editor />
         </Route>
-        )
       </Switch>
       <CustomSnackbar />
+      <ScrollToTop />
     </>
   );
 };
