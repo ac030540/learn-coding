@@ -11,20 +11,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MainPageBreadcrums = ({ subconcept }) => {
+const MainPageBreadcrums = ({ subconcept, adminRoute }) => {
   const level = useStoreState((state) => state.level);
   const history = useHistory();
   const breadcrumbsData = [
     {
       text: level,
       onClick: () => {
-        history.push('/concepts');
+        if (adminRoute) history.push('/admin/concepts');
+        else history.push('/concepts');
       },
     },
     {
       text: subconcept.conceptId.title,
       onClick: () => {
-        history.push(`/concepts/${subconcept.conceptId._id}`);
+        if (adminRoute) history.push(`/admin/concepts/${subconcept.conceptId._id}`);
+        else history.push(`/concepts/${subconcept.conceptId._id}`);
       },
     },
     {

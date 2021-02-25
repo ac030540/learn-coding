@@ -25,14 +25,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MainPage = () => {
+const MainPage = ({ adminRoute }) => {
   const [loading, setLoading] = useState(true);
   const [subconcept, setSubconcept] = useState({});
   const [language, setLanguage] = useState('python');
   const [code, setCode] = useState('');
   const { subconceptId } = useParams();
   const classes = useStyles();
-  console.log(subconcept);
+  // console.log(subconcept);
   useEffect(() => {
     fetch(`${process.env.REACT_APP_SERVER_URL}/subConcept/${subconceptId}`, {
       method: 'GET',
@@ -60,7 +60,7 @@ const MainPage = () => {
               <Grid item xs={12} sm={6}>
                 <Grid container spacing={2} justify="space-between">
                   <Grid item>
-                    <MainPageBreadcrums subconcept={subconcept} />
+                    <MainPageBreadcrums adminRoute={adminRoute} subconcept={subconcept} />
                   </Grid>
                   <Grid item>
                     <LanguageSelector language={language} setLanguage={setLanguage} />

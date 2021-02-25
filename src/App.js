@@ -17,11 +17,11 @@ import Concepts from './components/admin/viewConcepts/Concepts';
 import EditConcepts from './components/admin/editConcepts/EditConcepts';
 import CreateConcepts from './components/admin/createConcepts/CreateConcepts';
 import Subconcepts from './components/admin/viewSubconcepts/Subconcepts';
-import CreateSubconcept from './components/admin/createSubconcept/CreateSubconcept';
 import EditSubconcept from './components/admin/editSubconcept/EditSubconcept';
 import UserConcepts from './components/concepts/UserConcepts';
 import UserSubconcepts from './components/subconcepts/UserSubconcepts';
 import MainPage from './components/mainPage/MainPage';
+import AdminMainPage from './components/admin/Subconcept';
 // import ReactAceCodeEditor from './components/common/ReactAceCodeEditor';
 
 const App = () => {
@@ -127,8 +127,11 @@ const App = () => {
         <Route exact path="/admin/concepts/:conceptId">
           <Subconcepts />
         </Route>
-        <Route exact path="/admin/concepts/:conceptId/create">
-          <CreateSubconcept />
+        <Route exact path="/admin/concepts/:conceptId">
+          <Subconcepts />
+        </Route>
+        <Route exact path="/admin/subconcepts/:subconceptId">
+          <AdminMainPage />
         </Route>
         <Route exact path="/admin/concepts/:conceptId/subconcepts/:subconceptId/edit">
           <EditSubconcept />
