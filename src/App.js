@@ -22,6 +22,7 @@ import UserConcepts from './components/concepts/UserConcepts';
 import UserSubconcepts from './components/subconcepts/UserSubconcepts';
 import MainPage from './components/mainPage/MainPage';
 import AdminMainPage from './components/admin/Subconcept';
+import CreateSubconcept from './components/admin/createSubconcept/CreateSubconcept';
 import Editor from './components/editor/Editor';
 import ScrollToTop from './components/common/ScrollToTop';
 // import ReactAceCodeEditor from './components/common/ReactAceCodeEditor';
@@ -126,8 +127,8 @@ const App = () => {
         <Route exact path="/admin/concepts/create">
           <CreateConcepts />
         </Route>
-        <Route exact path="/admin/concepts/:conceptId">
-          <Subconcepts />
+        <Route exact path="/admin/concepts/:conceptId/create">
+          <CreateSubconcept />
         </Route>
         <Route exact path="/admin/concepts/:conceptId">
           <Subconcepts />
