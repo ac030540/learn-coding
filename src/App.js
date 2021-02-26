@@ -120,7 +120,7 @@ const App = () => {
         <Route exact path="/admin/concepts">
           <Concepts />
         </Route>
-        <Route exact path="/admin/concepts/:_id/edit">
+        <Route exact path="/admin/concepts/:conceptId/edit">
           <EditConcepts />
         </Route>
         <Route exact path="/admin/concepts/create">

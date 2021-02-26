@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 
 const EditConcepts = () => {
   const [concept, setConcept] = useState({});
-  const { _id } = useParams();
+  const { conceptId } = useParams();
   const [loading, setLoading] = useState(true);
   const [backdropOpen, setBackdropOpen] = useState(false);
   const auth = useStoreState((state) => state.auth);
@@ -45,7 +45,7 @@ const EditConcepts = () => {
   // console.log(concepts);
   useEffect(() => {
     // fetching the data of the concepts
-    fetch(`${process.env.REACT_APP_SERVER_URL}/concept/${_id}`, {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/concept/${conceptId}`, {
       method: 'GET',
     })
       .then((response) => response.json())
@@ -67,7 +67,7 @@ const EditConcepts = () => {
     formData.append('order', concept.order);
     formData.append('email', auth.email);
 
-    fetch(`${process.env.REACT_APP_SERVER_URL}/concept/${_id}`, {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/concept/${conceptId}`, {
       method: 'PUT',
       body: formData,
     })
