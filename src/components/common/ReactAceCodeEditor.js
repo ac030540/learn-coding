@@ -76,7 +76,7 @@ const ReactAceCodeEditor = ({
           setSnackbarStates({
             open: true,
             severity: 'error',
-            message: 'Error editing the subconcept',
+            message: 'Error in submitting the code',
           });
         }
       })
@@ -85,7 +85,7 @@ const ReactAceCodeEditor = ({
         setSnackbarStates({
           open: true,
           severity: 'error',
-          message: 'Error editing the subconcept',
+          message: 'Error in submitting the code',
         });
       });
   };

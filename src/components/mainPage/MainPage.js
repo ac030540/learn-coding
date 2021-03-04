@@ -28,7 +28,8 @@ const useStyles = makeStyles((theme) => ({
 const MainPage = ({ adminRoute }) => {
   const [loading, setLoading] = useState(true);
   const [subconcept, setSubconcept] = useState({});
-  const [language, setLanguage] = useState('python');
+  const [language, setLanguage] = useState('');
+  const [languagesArray, setLanguagesArray] = useState([]);
   const [code, setCode] = useState('');
   const { subconceptId } = useParams();
   const classes = useStyles();
@@ -40,6 +41,14 @@ const MainPage = ({ adminRoute }) => {
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
+          if (language === '') {
+            const array = [];
+            if (data.data.python.story) array.push({ label: 'Python', value: 'python' });
+            if (data.data.java.story) array.push({ label: 'Java', value: 'java' });
+            setLanguagesArray(array);
+            setLanguage(array[0].value);
+            console.log(array);
+          }
           if (language === 'python')
             setCode(data.data.python.codingTemplate ? data.data.python.codingTemplate : '');
           else setCode(data.data.java.codingTemplate ? data.data.java.codingTemplate : '');
@@ -65,7 +74,11 @@ const MainPage = ({ adminRoute }) => {
                     <MainPageBreadcrums adminRoute={adminRoute} subconcept={subconcept} />
                   </Grid>
                   <Grid item>
-                    <LanguageSelector language={language} setLanguage={setLanguage} />
+                    <LanguageSelector
+                      languagesArray={languagesArray}
+                      language={language}
+                      setLanguage={setLanguage}
+                    />
                   </Grid>
                 </Grid>
                 <Box>

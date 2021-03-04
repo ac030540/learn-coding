@@ -10,7 +10,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const LanguageSelector = ({ language, setLanguage }) => {
+const LanguageSelector = ({ languagesArray, language, setLanguage }) => {
   const classes = useStyles();
   return (
     <FormControl variant="outlined" className={classes.formControl}>
@@ -22,8 +22,11 @@ const LanguageSelector = ({ language, setLanguage }) => {
         onChange={(e) => setLanguage(e.target.value)}
         label="Language"
       >
-        <MenuItem value="python">Python</MenuItem>
-        <MenuItem value="java">Java</MenuItem>
+        {languagesArray.map((data) => (
+          <MenuItem key={data.value} value={data.value}>
+            {data.label}
+          </MenuItem>
+        ))}
       </Select>
     </FormControl>
   );
