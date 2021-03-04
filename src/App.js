@@ -25,6 +25,7 @@ import AdminMainPage from './components/admin/Subconcept';
 import CreateSubconcept from './components/admin/createSubconcept/CreateSubconcept';
 import Editor from './components/editor/Editor';
 import ScrollToTop from './components/common/ScrollToTop';
+import References from './components/references/References';
 // import ReactAceCodeEditor from './components/common/ReactAceCodeEditor';
 
 const App = () => {
@@ -141,6 +142,9 @@ const App = () => {
         </Route>
         <Route exact path="/editor">
           <Editor />
+        </Route>
+        <Route exact path="/references">
+          <References />
         </Route>
       </Switch>
       <CustomSnackbar />

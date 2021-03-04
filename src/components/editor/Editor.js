@@ -32,6 +32,16 @@ const Editor = () => {
   const classes = useStyles();
   const [language, setLanguage] = useState('python');
   const [value, setValue] = useState('');
+  const languagesArray = [
+    {
+      value: 'python',
+      label: 'Python',
+    },
+    {
+      value: 'java',
+      label: 'Java',
+    },
+  ];
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -45,7 +55,11 @@ const Editor = () => {
           </Typography>
         </div>
         <div className={classes.LanguageSelector}>
-          <LanguageSelector language={language} setLanguage={setLanguage} />
+          <LanguageSelector
+            languagesArray={languagesArray}
+            language={language}
+            setLanguage={setLanguage}
+          />
         </div>
         <ReactAceCodeEditor value={value} setValue={setValue} language={language} />
       </Container>
