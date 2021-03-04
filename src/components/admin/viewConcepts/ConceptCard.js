@@ -17,6 +17,13 @@ const useStyles = makeStyles({
 const ConceptCard = ({ concept, setOpen, setSelectedConcept }) => {
   const classes = useStyles();
   const history = useHistory();
+  const languages = [];
+  concept.subConceptId.forEach((subconcept) => {
+    if (subconcept.python.story && subconcept.python.story.trim() && !languages.includes('Python'))
+      languages.push('Python');
+    if (subconcept.java.story && subconcept.java.story.trim() && !languages.includes('Java'))
+      languages.push('Java');
+  });
   const handleEdit = () => {
     history.push(`/admin/concepts/${concept._id}/edit`);
   };
@@ -33,8 +40,12 @@ const ConceptCard = ({ concept, setOpen, setSelectedConcept }) => {
           <Typography gutterBottom variant="h5" component="h2">
             {concept.title}
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
+          <Typography gutterBottom variant="body2" color="textSecondary" component="p">
             {concept.description}
+          </Typography>
+          <Typography color="textSecondary" variant="caption">
+            Languages :&nbsp;
+            {languages.join(', ')}
           </Typography>
         </CardContent>
       </CardActionArea>

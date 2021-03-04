@@ -22,8 +22,8 @@ const SubconceptCard = ({ subconcept, setOpen, setSelectedSubconcept }) => {
     history.push(`/admin/concepts/${conceptId}/subconcepts/${subconcept._id}/edit`);
   };
   const languages = [];
-  if (subconcept.python.story) languages.push('Python');
-  if (subconcept.java.story) languages.push('Java');
+  if (subconcept.python.story && subconcept.python.story.trim()) languages.push('Python');
+  if (subconcept.java.story && subconcept.java.story.trim()) languages.push('Java');
 
   const handleDelete = () => {
     setSelectedSubconcept(subconcept);

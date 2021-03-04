@@ -16,7 +16,13 @@ const useStyles = makeStyles({
 const ConceptCard = ({ concept }) => {
   const classes = useStyles();
   const history = useHistory();
-
+  const languages = [];
+  concept.subConceptId.forEach((subconcept) => {
+    if (subconcept.python.story && subconcept.python.story.trim() && !languages.includes('Python'))
+      languages.push('Python');
+    if (subconcept.java.story && subconcept.java.story.trim() && !languages.includes('Java'))
+      languages.push('Java');
+  });
   return (
     <Card className={classes.root}>
       <CardActionArea onClick={() => history.push(`/concepts/${concept._id}`)}>
@@ -25,8 +31,12 @@ const ConceptCard = ({ concept }) => {
           <Typography gutterBottom variant="h5" component="h2">
             {concept.title}
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
+          <Typography variant="body2" gutterBottom color="textSecondary" component="p">
             {concept.description}
+          </Typography>
+          <Typography color="textSecondary" variant="caption">
+            Languages :&nbsp;
+            {languages.join(', ')}
           </Typography>
         </CardContent>
       </CardActionArea>

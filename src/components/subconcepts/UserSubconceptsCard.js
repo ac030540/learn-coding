@@ -33,8 +33,8 @@ const SubconceptCard = ({ subconcept }) => {
   const classes = useStyles();
   const history = useHistory();
   const languages = [];
-  if (subconcept.python.story) languages.push('Python');
-  if (subconcept.java.story) languages.push('Java');
+  if (subconcept.python.story && subconcept.python.story.trim()) languages.push('Python');
+  if (subconcept.java.story && subconcept.java.story.trim()) languages.push('Java');
 
   return (
     <Card className={classes.completedRoot}>
