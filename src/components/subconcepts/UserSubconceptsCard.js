@@ -17,11 +17,25 @@ const useStyles = makeStyles((theme) => ({
   incompleteRoot: {
     maxWidth: 'auto',
   },
+  'span + span:last-child': {
+    '&::before': {
+      content: ' and ',
+    },
+  },
+  'span:nth-of-type(n + 2):not(:last-child)': {
+    '&::before': {
+      content: ', ',
+    },
+  },
 }));
 
 const SubconceptCard = ({ subconcept }) => {
   const classes = useStyles();
   const history = useHistory();
+  const languages = [];
+  if (subconcept.python.story) languages.push('Python');
+  if (subconcept.java.story) languages.push('Java');
+
   return (
     <Card className={classes.completedRoot}>
       <CardActionArea onClick={() => history.push(`/subconcepts/${subconcept._id}`)}>
@@ -29,8 +43,12 @@ const SubconceptCard = ({ subconcept }) => {
           <Typography gutterBottom variant="h5" component="h2">
             {subconcept.title}
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
+          <Typography gutterBottom variant="body2" color="textSecondary" component="p">
             {subconcept.description}
+          </Typography>
+          <Typography color="textSecondary" variant="caption">
+            Languages :&nbsp;
+            {languages.join(', ')}
           </Typography>
         </CardContent>
       </CardActionArea>

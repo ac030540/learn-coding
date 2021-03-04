@@ -9,6 +9,7 @@ import MainPageBreadcrums from './MainPageBreadcrums';
 import LanguageSelector from './LanguageSelector';
 import Content from './Content';
 import ReactAceCodeEditor from '../common/ReactAceCodeEditor';
+import { makeLanguagesArray } from '../../commonFunctions';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,12 +43,9 @@ const MainPage = ({ adminRoute }) => {
       .then((data) => {
         if (data.success) {
           if (language === '') {
-            const array = [];
-            if (data.data.python.story) array.push({ label: 'Python', value: 'python' });
-            if (data.data.java.story) array.push({ label: 'Java', value: 'java' });
+            const array = makeLanguagesArray(data.data);
             setLanguagesArray(array);
             setLanguage(array[0].value);
-            console.log(array);
           }
           if (language === 'python')
             setCode(data.data.python.codingTemplate ? data.data.python.codingTemplate : '');

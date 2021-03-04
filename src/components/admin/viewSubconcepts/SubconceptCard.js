@@ -21,6 +21,9 @@ const SubconceptCard = ({ subconcept, setOpen, setSelectedSubconcept }) => {
   const handleEdit = () => {
     history.push(`/admin/concepts/${conceptId}/subconcepts/${subconcept._id}/edit`);
   };
+  const languages = [];
+  if (subconcept.python.story) languages.push('Python');
+  if (subconcept.java.story) languages.push('Java');
 
   const handleDelete = () => {
     setSelectedSubconcept(subconcept);
@@ -34,8 +37,12 @@ const SubconceptCard = ({ subconcept, setOpen, setSelectedSubconcept }) => {
           <Typography gutterBottom variant="h5" component="h2">
             {subconcept.title}
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
+          <Typography gutterBottom variant="body2" color="textSecondary" component="p">
             {subconcept.description}
+          </Typography>
+          <Typography color="textSecondary" variant="caption">
+            Languages :&nbsp;
+            {languages.join(', ')}
           </Typography>
         </CardContent>
       </CardActionArea>

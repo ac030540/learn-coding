@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/prefer-default-export
 export const calculateSeverity = (description) => {
   if (description === 'Accepted') return 'success';
   if (
@@ -9,4 +8,11 @@ export const calculateSeverity = (description) => {
   )
     return 'error';
   return 'warning';
+};
+
+export const makeLanguagesArray = (subconcept) => {
+  const array = [];
+  if (subconcept.python.story) array.push({ label: 'Python', value: 'python' });
+  if (subconcept.java.story) array.push({ label: 'Java', value: 'java' });
+  return array;
 };
