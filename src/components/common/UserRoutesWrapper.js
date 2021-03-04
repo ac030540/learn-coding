@@ -27,9 +27,6 @@ const UserRoutesWrapper = () => {
       <ProtectedRoute exact path="/concepts/:conceptId">
         <UserSubconcepts />
       </ProtectedRoute>
-      <ProtectedRoute exact path="/concepts/:conceptId">
-        <UserSubconcepts />
-      </ProtectedRoute>
       <ProtectedRoute exact path="/subconcepts/:subconceptId">
         <MainPage />
       </ProtectedRoute>

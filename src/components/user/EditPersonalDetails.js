@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import { useStoreState } from 'easy-peasy';
+import { useStoreState, useStoreActions } from 'easy-peasy';
 import { Divider } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -23,11 +23,58 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Settings = () => {
+const EditPersonalDetails = ({ setLoading }) => {
   const classes = useStyles();
   const auth = useStoreState((state) => state.auth);
   const [firstName, setFirstName] = useState(auth.firstName);
   const [lastName, setLastName] = useState(auth.lastName);
+  const setSnackbarStates = useStoreActions((actions) => actions.setSnackbarStates);
+  const setAuth = useStoreActions((actions) => actions.setAuth);
+
+  const handleUpdateDetails = () => {
+    setLoading(true);
+    const formData = new FormData();
+    formData.append('uid', auth.uid);
+    formData.append('email', auth.email);
+    formData.append('firstName', auth.firstName);
+    formData.append('lastName', auth.lastName);
+
+    fetch(`${process.env.REACT_APP_SERVER_URL}/user/${auth.id}`, {
+      method: 'PUT',
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          setLoading(false);
+          setAuth({
+            ...auth,
+            firstName,
+            lastName,
+          });
+          setSnackbarStates({
+            open: true,
+            severity: 'success',
+            message: 'Successfully updated the details',
+          });
+        } else {
+          setLoading(false);
+          setSnackbarStates({
+            open: true,
+            severity: 'error',
+            message: 'Error editing the details',
+          });
+        }
+      })
+      .catch(() => {
+        setLoading(false);
+        setSnackbarStates({
+          open: true,
+          severity: 'error',
+          message: 'Error editing the details',
+        });
+      });
+  };
 
   return (
     <div className={classes.paper}>
@@ -42,7 +89,7 @@ const Settings = () => {
               <Divider />
             </Grid>
             <Grid item xs={12}>
-              <Typography variant="body1" color="textSecondary" component="p">
+              <Typography gutterBottom variant="body1" color="textSecondary" component="p">
                 Email: {auth.email}
               </Typography>
             </Grid>
@@ -73,7 +120,12 @@ const Settings = () => {
           </Grid>
         </CardContent>
         <CardActions>
-          <Button className={classes.button} variant="outlined" color="primary">
+          <Button
+            onClick={handleUpdateDetails}
+            className={classes.button}
+            variant="outlined"
+            color="primary"
+          >
             Update
           </Button>
         </CardActions>
@@ -82,4 +134,4 @@ const Settings = () => {
   );
 };
 
-export default Settings;
+export default EditPersonalDetails;

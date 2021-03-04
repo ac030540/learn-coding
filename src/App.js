@@ -38,6 +38,7 @@ const App = () => {
                 firstName: userData.data.firstName,
                 lastName: userData.data.lastName,
                 email,
+                id: userData.data._id,
                 emailVerified,
               });
               setLoading(false);
