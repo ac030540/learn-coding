@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import SettingsIcon from '@material-ui/icons/Settings';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { useStoreState } from 'easy-peasy';
 import useRedirectUnverifiedUser from '../../customHooks/useRedirectUnverifiedUser';
 import useRedirectUnsignedUser from '../../customHooks/useRedirectUnsignedUser';
+import EditPersonalDetails from './EditPersonalDetails';
+import UpdatePassword from './UpdatePassword';
+import CustomBackdrop from '../common/Backdrop';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -24,13 +26,13 @@ const useStyles = makeStyles((theme) => ({
 
 const Settings = () => {
   const classes = useStyles();
-  const auth = useStoreState((state) => state.auth);
   useRedirectUnsignedUser();
   useRedirectUnverifiedUser();
-
+  const [loading, setLoading] = useState(false);
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="md">
       <CssBaseline />
+      <CustomBackdrop open={loading} />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <SettingsIcon />
@@ -38,10 +40,9 @@ const Settings = () => {
         <Typography component="h1" variant="h6">
           Account Settings
         </Typography>
-        <Typography component="h1" variant="body2">
-          {auth.email}
-        </Typography>
       </div>
+      <EditPersonalDetails setLoading={setLoading} />
+      <UpdatePassword setLoading={setLoading} />
     </Container>
   );
 };

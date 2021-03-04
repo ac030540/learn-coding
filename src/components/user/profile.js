@@ -27,15 +27,17 @@ const Profile = () => {
   const auth = useStoreState((state) => state.auth);
   useRedirectUnsignedUser();
   useRedirectUnverifiedUser();
-
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="md">
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <AssignmentIndIcon />
         </Avatar>
         <Typography component="h1" variant="h6">
+          {auth.firstName} {auth.lastName}
+        </Typography>
+        <Typography component="h1" variant="body2">
           {auth.email}
         </Typography>
       </div>
