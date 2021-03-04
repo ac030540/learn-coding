@@ -6,8 +6,6 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useStoreState } from 'easy-peasy';
-import useRedirectUnsignedUser from '../../customHooks/useRedirectUnsignedUser';
-import useRedirectUnverifiedUser from '../../customHooks/useRedirectUnverifiedUser';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -25,8 +23,6 @@ const useStyles = makeStyles((theme) => ({
 const Profile = () => {
   const classes = useStyles();
   const auth = useStoreState((state) => state.auth);
-  useRedirectUnsignedUser();
-  useRedirectUnverifiedUser();
   return (
     <Container component="main" maxWidth="md">
       <CssBaseline />

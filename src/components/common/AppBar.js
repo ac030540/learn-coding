@@ -54,6 +54,7 @@ const CustomAppBar = () => {
       .signOut()
       .then(() => {
         // Sign-out successful.
+        history.push('/signin');
         setSnackbarStates({
           open: true,
           severity: 'success',
@@ -66,7 +67,6 @@ const CustomAppBar = () => {
           severity: 'error',
           message: 'Unable to signout',
         });
-        // An error happened.
       });
     setAnchorEl(null);
   };

@@ -10,7 +10,6 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useHistory } from 'react-router-dom';
-import useRedirectUnsignedUser from '../../customHooks/useRedirectUnsignedUser';
 
 const useStyles = makeStyles((theme) => ({
   '@global': {
@@ -66,7 +65,6 @@ const levels = [
 const Homepage = () => {
   const classes = useStyles();
   const setLevel = useStoreActions((actions) => actions.setLevel);
-  useRedirectUnsignedUser();
   const history = useHistory();
   const handleCardClick = (value) => {
     setLevel(value);

@@ -16,7 +16,7 @@ import * as PasswordValidator from 'password-validator';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import Loading from '../common/Loading';
 import { auth as firebaseAuth } from '../../firebase.config';
-import useRedirectSignedUser from '../../customHooks/useRedirectSignedUser';
+// import useRedirectSignedUser from '../../customHooks/useRedirectSignedUser';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -47,7 +47,7 @@ const SignUp = () => {
     email: '',
     password: '',
   }
-  useRedirectSignedUser();
+  // useRedirectSignedUser();
   const [userDetails, setUserDetails] = useState(initialUserDetails);
   const [loading, setLoading] = useState(false);
   const setSnackbarStates = useStoreActions((actions) => actions.setSnackbarStates);

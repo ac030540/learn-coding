@@ -5,8 +5,6 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import useRedirectUnverifiedUser from '../../customHooks/useRedirectUnverifiedUser';
-import useRedirectUnsignedUser from '../../customHooks/useRedirectUnsignedUser';
 import EditPersonalDetails from './EditPersonalDetails';
 import UpdatePassword from './UpdatePassword';
 import CustomBackdrop from '../common/Backdrop';
@@ -26,8 +24,6 @@ const useStyles = makeStyles((theme) => ({
 
 const Settings = () => {
   const classes = useStyles();
-  useRedirectUnsignedUser();
-  useRedirectUnverifiedUser();
   const [loading, setLoading] = useState(false);
   return (
     <Container component="main" maxWidth="md">
