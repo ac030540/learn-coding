@@ -8,11 +8,14 @@ import { Grid, Box, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import PlayArrowIcon from '@material-ui/icons/PlayCircleOutline';
 import SendIcon from '@material-ui/icons/Send';
+import { useStoreState, useStoreActions } from 'easy-peasy';
 import { useState } from 'react';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Output from './Output';
+import CustomBackdrop from './Backdrop';
+import { calculateSeverity } from '../../commonFunctions';
 
 const useStyles = makeStyles((theme) => ({
   editor: {
@@ -40,11 +43,57 @@ const ReactAceCodeEditor = ({
 
   const classes = useStyles();
   const [allowCustomInput, setAllowCustomInput] = useState(false);
+  const [backdropOpen, setBackdropOpen] = useState(false);
   const [customInput, setCustomInput] = useState('');
+  const auth = useStoreState((state) => state.auth);
+  const [output, setOuput] = useState('');
+  const setSnackbarStates = useStoreActions((actions) => actions.setSnackbarStates);
+
+  const handleRun = () => {
+    setBackdropOpen(true);
+    const formData = new FormData();
+    formData.append('email', auth.email);
+    formData.append('code', value);
+    if (language === 'python') formData.append('language', 'Python3');
+    else formData.append('language', 'Java');
+
+    fetch(`${process.env.REACT_APP_SERVER_URL}/submission/run`, {
+      method: 'POST',
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          setBackdropOpen(false);
+          setOuput(data.data.stdout);
+          setSnackbarStates({
+            open: true,
+            severity: calculateSeverity(data.data.status.description),
+            message: data.data.status.description,
+          });
+        } else {
+          setBackdropOpen(false);
+          setSnackbarStates({
+            open: true,
+            severity: 'error',
+            message: 'Error editing the subconcept',
+          });
+        }
+      })
+      .catch(() => {
+        setBackdropOpen(false);
+        setSnackbarStates({
+          open: true,
+          severity: 'error',
+          message: 'Error editing the subconcept',
+        });
+      });
+  };
 
   return (
     <Box>
       <Grid container>
+        <CustomBackdrop open={backdropOpen} />
         <Grid item xs={12}>
           <AceEditor
             // placeholder={placeholder}
@@ -70,13 +119,14 @@ const ReactAceCodeEditor = ({
           />
         </Grid>
         <Grid item xs={12}>
-          <Output />
+          <Output output={output} />
         </Grid>
         <Grid item xs={12}>
           <Button
             variant="contained"
             color="secondary"
             className={classes.button}
+            onClick={handleRun}
             startIcon={<PlayArrowIcon />}
           >
             run
