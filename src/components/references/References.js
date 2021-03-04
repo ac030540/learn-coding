@@ -5,7 +5,7 @@ import Avatar from '@material-ui/core/Avatar';
 import { CssBaseline, TextField } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import Chips from './Chips';
+import ReferenceCard from './ReferenceCard';
 import Loading from '../common/Loading';
 
 const useStyles = makeStyles((theme) => ({
@@ -81,7 +81,7 @@ const References = () => {
             autoComplete="search"
           />
         </div>
-        <Chips references={updatedReferences} />
+        <ReferenceCard references={updatedReferences} />
       </Container>
     </div>
   );

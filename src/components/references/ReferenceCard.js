@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Chips = ({ references }) => {
+const ReferenceCard = ({ references }) => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -40,4 +40,4 @@ const Chips = ({ references }) => {
   );
 };
 
-export default Chips;
+export default ReferenceCard;
