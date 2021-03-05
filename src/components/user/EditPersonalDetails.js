@@ -36,8 +36,8 @@ const EditPersonalDetails = ({ setLoading }) => {
     const formData = new FormData();
     formData.append('uid', auth.uid);
     formData.append('email', auth.email);
-    formData.append('firstName', auth.firstName);
-    formData.append('lastName', auth.lastName);
+    formData.append('firstName', firstName);
+    formData.append('lastName', lastName);
 
     fetch(`${process.env.REACT_APP_SERVER_URL}/user/${auth.id}`, {
       method: 'PUT',
