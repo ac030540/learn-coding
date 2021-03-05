@@ -76,7 +76,7 @@ const MainPage = ({ adminRoute }) => {
                     <MainPageBreadcrums adminRoute={adminRoute} subconcept={subconcept} />
                   </Grid>
                   <Grid item>
-                    <DebugMode language={language} setCode={setCode} />
+                    {subconcept.coding && <DebugMode language={language} setCode={setCode} />}
                     <LanguageSelector
                       languagesArray={languagesArray}
                       language={language}

@@ -1,5 +1,5 @@
 import FormControl from '@material-ui/core/FormControl';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Switch from '@material-ui/core/Switch';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import IconButton from '@material-ui/core/IconButton';
@@ -8,6 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 import { useParams } from 'react-router';
 import { useStoreState, useStoreActions } from 'easy-peasy';
+import CustomBackdrop from '../common/Backdrop';
 
 const useStyles = makeStyles((theme) => ({
   debug: {
@@ -18,22 +19,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DebugMode = ({ language }) => {
+const DebugMode = ({ language, setCode }) => {
   const classes = useStyles();
   const debug = useStoreState((state) => state.debug);
-  const auth = useStoreState((state) => state.auth);
+  // const auth = useStoreState((state) => state.auth);
   const setDebug = useStoreActions((actions) => actions.setDebug);
   const { subconceptId } = useParams();
+  const [loading, setLoading] = useState(false);
 
   const fetchAndUpdateCode = () => {
-    const formData = new FormData();
-    formData.append('email', auth.email);
-    formData.append('language', language);
-    fetch(`${process.env.REACT_APP_SERVER_URL}/debug/${subconceptId}/${auth.email}/${language}`, {
+    // const formData = new FormData();
+    // formData.append('email', auth.email);
+    setLoading(true);
+    fetch(`${process.env.REACT_APP_SERVER_URL}/debug/${subconceptId}/${language}`, {
       method: 'GET',
     })
       .then((response) => response.json())
       .then((data) => {
+        if (data.success) {
+          setCode(data.data);
+        }
+        setLoading(false);
         console.log(data);
       });
   };
@@ -46,6 +52,7 @@ const DebugMode = ({ language }) => {
 
   return (
     <>
+      <CustomBackdrop open={loading} />
       {debug && (
         <Tooltip title="Load new code">
           <IconButton

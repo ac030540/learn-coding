@@ -49,6 +49,7 @@ const Concepts = ({ userRoute }) => {
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
+          console.log(data);
           setConcepts(data);
           setLoading(false);
         }
