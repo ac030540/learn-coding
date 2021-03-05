@@ -9,10 +9,12 @@ import ScrollToTop from './components/common/ScrollToTop';
 import UserRoutesWrapper from './components/common/UserRoutesWrapper';
 import AdminRoutesWrapper from './components/admin/AdminRoutesWrapper';
 import './App.css';
+import CustomConfetti from './components/common/Confetti';
 
 const App = () => {
   const setAuth = useStoreActions((actions) => actions.setAuth);
   const auth = useStoreState((state) => state.auth);
+  const showConfetti = useStoreState((state) => state.showConfetti);
   const [loading, setLoading] = useState(true);
 
   // This effect automatically updates the auth state when there is change in the firebase auth
@@ -61,6 +63,7 @@ const App = () => {
   ) : (
     <>
       <CustomAppBar />
+      {showConfetti && <CustomConfetti />}
       <AuthRoutesWrapper />
       <UserRoutesWrapper />
       <AdminRoutesWrapper />

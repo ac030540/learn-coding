@@ -48,6 +48,7 @@ const ReactAceCodeEditor = ({
   const auth = useStoreState((state) => state.auth);
   const [output, setOuput] = useState('');
   const setSnackbarStates = useStoreActions((actions) => actions.setSnackbarStates);
+  const setShowConfetti = useStoreActions((actions) => actions.setShowConfetti);
 
   const handleRun = () => {
     setBackdropOpen(true);
@@ -135,6 +136,9 @@ const ReactAceCodeEditor = ({
             <Button
               variant="outlined"
               color="secondary"
+              onClick={() => {
+                setShowConfetti(true);
+              }}
               className={classes.button}
               startIcon={<SendIcon />}
             >

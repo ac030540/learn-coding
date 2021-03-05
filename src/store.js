@@ -35,6 +35,10 @@ const store = createStore({
   setDebug: action((state, payload) => {
     state.debug = payload;
   }),
+  showConfetti: false,
+  setShowConfetti: action((state, payload) => {
+    state.showConfetti = payload;
+  }),
 });
 
 export default store;
