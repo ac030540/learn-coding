@@ -20,7 +20,7 @@ const useStyles = makeStyles(() => ({
     height: '100px',
     padding: '10px',
     overflow: 'scroll',
-    whiteSpace: 'pre-wrap',
+    whiteSpace: 'pre',
   },
 }));
 
