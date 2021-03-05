@@ -37,7 +37,7 @@ const CreateSubconcept = () => {
   const { conceptId } = useParams();
   const setSnackbarStates = useStoreActions((actions) => actions.setSnackbarStates);
   const history = useHistory();
-  const [language, setLanguage] = useState('python');
+  const [language, setLanguage] = useState('Python3');
   const [subconcept, setSubconcept] = useState({
     title: '',
     description: '',

@@ -31,6 +31,10 @@ const store = createStore({
       open: payload,
     };
   }),
+  debug: false,
+  setDebug: action((state, payload) => {
+    state.debug = payload;
+  }),
 });
 
 export default store;

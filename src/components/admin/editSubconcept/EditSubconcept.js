@@ -36,7 +36,7 @@ const EditSubconcept = () => {
   const { subconceptId, conceptId } = useParams();
   const [loading, setLoading] = useState(true);
   const [backdropOpen, setBackdropOpen] = useState(false);
-  const [language, setLanguage] = useState('python');
+  const [language, setLanguage] = useState('Python3');
   const auth = useStoreState((state) => state.auth);
   const setSnackbarStates = useStoreActions((actions) => actions.setSnackbarStates);
   const history = useHistory();
@@ -54,7 +54,7 @@ const EditSubconcept = () => {
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
-          if (language === 'python') {
+          if (language === 'Python3') {
             setSubconcept({ ...data.data, ...data.data.python });
           } else {
             setSubconcept({ ...data.data, ...data.data.java });

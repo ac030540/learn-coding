@@ -30,15 +30,15 @@ const useStyles = makeStyles((theme) => ({
 
 const Editor = () => {
   const classes = useStyles();
-  const [language, setLanguage] = useState('python');
+  const [language, setLanguage] = useState('Python3');
   const [value, setValue] = useState('');
   const languagesArray = [
     {
-      value: 'python',
+      value: 'Python3',
       label: 'Python',
     },
     {
-      value: 'java',
+      value: 'Java',
       label: 'Java',
     },
   ];

@@ -82,8 +82,8 @@ export default function ConceptDetails({
                     onChange={(event) => setLanguage(event.target.value)}
                     label="Language"
                   >
-                    <MenuItem value="python">Python</MenuItem>
-                    <MenuItem value="java">Java</MenuItem>
+                    <MenuItem value="Python3">Python</MenuItem>
+                    <MenuItem value="Java">Java</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>

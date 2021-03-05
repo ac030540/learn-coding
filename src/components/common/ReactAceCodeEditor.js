@@ -54,7 +54,7 @@ const ReactAceCodeEditor = ({
     const formData = new FormData();
     formData.append('email', auth.email);
     formData.append('code', value);
-    if (language === 'python') formData.append('language', 'Python3');
+    if (language === 'Python3') formData.append('language', 'Python3');
     else formData.append('language', 'Java');
 
     fetch(`${process.env.REACT_APP_SERVER_URL}/submission/run`, {
@@ -97,7 +97,7 @@ const ReactAceCodeEditor = ({
         <Grid item xs={12}>
           <AceEditor
             // placeholder={placeholder}
-            mode={language}
+            mode={language === 'Python3' ? 'python' : 'java'}
             theme="monokai"
             name="blah2"
             // onLoad={onLoad}

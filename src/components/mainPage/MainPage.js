@@ -10,6 +10,7 @@ import LanguageSelector from './LanguageSelector';
 import Content from './Content';
 import ReactAceCodeEditor from '../common/ReactAceCodeEditor';
 import { makeLanguagesArray } from '../../commonFunctions';
+import DebugMode from './DebugMode';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
     // overflowY: 'scroll',
     // overflowX: 'hidden',
     // height: '89vh',
+  },
+  debug: {
+    marginTop: theme.spacing(1),
   },
 }));
 
@@ -47,7 +51,7 @@ const MainPage = ({ adminRoute }) => {
             setLanguagesArray(array);
             setLanguage(array[0].value);
           }
-          if (language === 'python')
+          if (language === 'Python3')
             setCode(data.data.python.codingTemplate ? data.data.python.codingTemplate : '');
           else setCode(data.data.java.codingTemplate ? data.data.java.codingTemplate : '');
           setSubconcept(data.data);
@@ -72,6 +76,7 @@ const MainPage = ({ adminRoute }) => {
                     <MainPageBreadcrums adminRoute={adminRoute} subconcept={subconcept} />
                   </Grid>
                   <Grid item>
+                    <DebugMode language={language} setCode={setCode} />
                     <LanguageSelector
                       languagesArray={languagesArray}
                       language={language}

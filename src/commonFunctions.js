@@ -13,8 +13,8 @@ export const calculateSeverity = (description) => {
 export const makeLanguagesArray = (subconcept) => {
   const array = [];
   if (subconcept.python.story && subconcept.python.story.trim())
-    array.push({ label: 'Python', value: 'python' });
+    array.push({ label: 'Python', value: 'Python3' });
   if (subconcept.java.story && subconcept.java.story.trim())
-    array.push({ label: 'Java', value: 'java' });
+    array.push({ label: 'Java', value: 'Java' });
   return array;
 };
