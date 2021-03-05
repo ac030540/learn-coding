@@ -39,9 +39,10 @@ const References = () => {
     const { value } = e.target;
     setSearch(value);
     setUpdatedReferences(() =>
-      references.filter((reference) => reference.title.toLowerCase().includes(value))
+      references.filter((reference) => reference.title.toLowerCase().includes(value.toLowerCase()))
     );
   };
+
   useEffect(() => {
     fetch(`${process.env.REACT_APP_SERVER_URL}/references`, {
       method: 'GET',
