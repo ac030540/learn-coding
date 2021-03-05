@@ -91,6 +91,15 @@ const ReactAceCodeEditor = ({
       });
   };
 
+  const handleSubmit = () => {
+    setShowConfetti(true);
+    setSnackbarStates({
+      open: true,
+      severity: 'success',
+      message: 'Accepted',
+    });
+  };
+
   return (
     <Box>
       <Grid container>
@@ -136,9 +145,7 @@ const ReactAceCodeEditor = ({
             <Button
               variant="outlined"
               color="secondary"
-              onClick={() => {
-                setShowConfetti(true);
-              }}
+              onClick={handleSubmit}
               className={classes.button}
               startIcon={<SendIcon />}
             >
