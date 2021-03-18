@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
@@ -6,6 +6,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useStoreState } from 'easy-peasy';
+import SubmissionsTable from './SubmissionsTable';
+import Loading from '../common/Loading';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -13,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    marginBottom: theme.spacing(4),
   },
   avatar: {
     margin: theme.spacing(1),
@@ -22,8 +25,26 @@ const useStyles = makeStyles((theme) => ({
 
 const Profile = () => {
   const classes = useStyles();
+  const [loading, setLoading] = useState(true);
+  const [submissions, setSubmissions] = useState([]);
   const auth = useStoreState((state) => state.auth);
-  return (
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/submission/user/${auth.id}`, {
+      method: 'GET',
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          setSubmissions(data.data);
+          setLoading(false);
+        }
+      });
+  }, []);
+
+  return loading ? (
+    <Loading />
+  ) : (
     <Container component="main" maxWidth="md">
       <CssBaseline />
       <div className={classes.paper}>
@@ -37,6 +58,7 @@ const Profile = () => {
           {auth.email}
         </Typography>
       </div>
+      <SubmissionsTable submissions={submissions} />
     </Container>
   );
 };
