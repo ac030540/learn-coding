@@ -117,19 +117,19 @@ const ReactAceCodeEditor = ({
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data) {
+        if (data.success) {
           setBackdropOpen(false);
           setStatus({
-            description: data.status.description,
-            time: data.time,
-            memory: data.memory,
+            description: data.data.status.description,
+            time: data.data.time,
+            memory: data.data.memory,
           });
           setSnackbarStates({
             open: true,
-            severity: calculateSeverity(data.status.description),
-            message: data.status.description,
+            severity: calculateSeverity(data.data.status.description),
+            message: data.data.status.description,
           });
-          if (data.status.description === 'Accepted') {
+          if (data.data.status.description === 'Accepted') {
             setShowConfetti(true);
             setOpen(true);
           }
@@ -166,19 +166,19 @@ const ReactAceCodeEditor = ({
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data) {
+        if (data.success) {
           setBackdropOpen(false);
           setStatus({
-            description: data.status.description,
-            time: data.time,
-            memory: data.memory,
+            description: data.data.status.description,
+            time: data.data.time,
+            memory: data.data.memory,
           });
           setSnackbarStates({
             open: true,
-            severity: calculateSeverity(data.status.description),
-            message: data.status.description,
+            severity: calculateSeverity(data.data.status.description),
+            message: data.data.status.description,
           });
-          if (data.status.description === 'Accepted') setShowConfetti(true);
+          if (data.data.status.description === 'Accepted') setShowConfetti(true);
         } else {
           setBackdropOpen(false);
           setSnackbarStates({

@@ -11,8 +11,8 @@ const CustomConfetti = () => {
       height={height}
       recycle={false}
       onConfettiComplete={() => setShowConfetti(false)}
-      numberOfPieces={1000}
-      tweenDuration={1000}
+      numberOfPieces={5000}
+      tweenDuration={5000}
     />
   );
 };
