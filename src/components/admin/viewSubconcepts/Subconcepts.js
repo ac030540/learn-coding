@@ -53,6 +53,7 @@ const Subconcepts = ({ userRoute }) => {
   const [subconcepts, setSubconcepts] = useState({});
   const [loading, setLoading] = useState(true);
   const level = useStoreState((state) => state.level);
+  const auth = useStoreState((state) => state.auth);
   const [updated, setUpdated] = useState(false);
   const [conceptTitle, setConceptTitle] = useState('');
   // const setLevel = useStoreActions((actions) => actions.setLevel);
@@ -75,14 +76,14 @@ const Subconcepts = ({ userRoute }) => {
 
   useEffect(() => {
     // fetching the data of the concepts
-    fetch(`${process.env.REACT_APP_SERVER_URL}/subConcept/concept/${conceptId}`, {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/concept/${conceptId}?email=${auth.email}`, {
       method: 'GET',
     })
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
           setSubconcepts(data);
-          setConceptTitle(data.data.concept.title);
+          setConceptTitle(data.data.title);
           setLoading(false);
         }
       });
@@ -118,9 +119,12 @@ const Subconcepts = ({ userRoute }) => {
           <Breadcrumbs data={breadcrumbsData} />
         </Box>
         {userRoute ? (
-          <UserSubconceptsCardArray subconcepts={subconcepts.data.result} />
+          <UserSubconceptsCardArray subconcepts={subconcepts.data.subConceptId} />
         ) : (
-          <SubconceptCardsArray setUpdated={setUpdated} subconcepts={subconcepts.data.result} />
+          <SubconceptCardsArray
+            setUpdated={setUpdated}
+            subconcepts={subconcepts.data.subConceptId}
+          />
         )}
       </Container>
     </div>

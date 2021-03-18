@@ -37,7 +37,7 @@ const SubconceptCard = ({ subconcept }) => {
   if (subconcept.java.story && subconcept.java.story.trim()) languages.push('Java');
 
   return (
-    <Card className={classes.completedRoot}>
+    <Card className={subconcept.solved ? classes.completedRoot : ''}>
       <CardActionArea onClick={() => history.push(`/subconcepts/${subconcept._id}`)}>
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
