@@ -103,7 +103,9 @@ export default function SubmissionsTable({ submissions }) {
               return (
                 <TableRow hover role="checkbox" tabIndex={-1} key={submission._id}>
                   <TableCell align="center">
-                    {submission._id.substr(submission._id.length - 5)}
+                    <Link className={classes.link} to={`/submission/${submission._id}`}>
+                      {submission._id.substr(submission._id.length - 5)}
+                    </Link>
                   </TableCell>
                   <TableCell align="center">{submission.language}</TableCell>
                   <TableCell align="center">{submission.conceptId.category}</TableCell>

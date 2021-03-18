@@ -9,6 +9,7 @@ import References from '../references/References';
 import Profile from '../user/profile';
 import Settings from '../user/settings';
 import Homepage from '../homepage/Homepage';
+import SubmissionPage from '../user/SubmissionPage';
 import ProtectedRoute from './ProtectedRoute';
 import VerifyProtectedRoute from './VerifyProtectedRoute';
 
@@ -38,6 +39,9 @@ const UserRoutesWrapper = () => {
       </ProtectedRoute>
       <ProtectedRoute exact path="/profile">
         <Profile />
+      </ProtectedRoute>
+      <ProtectedRoute exact path="/submission/:submissionId">
+        <SubmissionPage />
       </ProtectedRoute>
       <ProtectedRoute exact path="/settings">
         <Settings />
