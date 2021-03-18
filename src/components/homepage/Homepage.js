@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { useStoreActions } from 'easy-peasy';
+import { useStoreActions, useStoreState } from 'easy-peasy';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useHistory } from 'react-router-dom';
+import Loading from '../common/Loading';
 
 const useStyles = makeStyles((theme) => ({
   '@global': {
@@ -64,14 +65,34 @@ const levels = [
 
 const Homepage = () => {
   const classes = useStyles();
+  const auth = useStoreState((state) => state.auth);
   const setLevel = useStoreActions((actions) => actions.setLevel);
   const history = useHistory();
+  const [loading, setLoading] = useState(true);
   const handleCardClick = (value) => {
     setLevel(value);
     history.push('/concepts');
   };
 
-  return (
+  useEffect(() => {
+    // fetching the data of progress
+    fetch(`${process.env.REACT_APP_SERVER_URL}/track/?email=${auth.email}`, {
+      method: 'GET',
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          levels[0].progress = data.data.Beginner;
+          levels[1].progress = data.data.Advanced;
+          levels[2].progress = data.data.Expert;
+          setLoading(false);
+        }
+      });
+  }, []);
+
+  return loading ? (
+    <Loading />
+  ) : (
     <>
       <CssBaseline />
       {/* Hero unit */}

@@ -36,6 +36,7 @@ const Concepts = ({ userRoute }) => {
   const [concepts, setConcepts] = useState({});
   const [loading, setLoading] = useState(true);
   const level = useStoreState((state) => state.level);
+  const auth = useStoreState((state) => state.auth);
   const [updated, setUpdated] = useState(false);
   const setLevel = useStoreActions((actions) => actions.setLevel);
   const classes = useStyles();
@@ -43,13 +44,12 @@ const Concepts = ({ userRoute }) => {
 
   useEffect(() => {
     // fetching the data of the concepts
-    fetch(`${process.env.REACT_APP_SERVER_URL}/concept?category=${level}`, {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/concept?category=${level}&email=${auth.email}`, {
       method: 'GET',
     })
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
-          console.log(data);
           setConcepts(data);
           setLoading(false);
         }

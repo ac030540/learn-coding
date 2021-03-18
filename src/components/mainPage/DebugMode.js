@@ -40,7 +40,7 @@ const DebugMode = ({ language, setCode }) => {
           setCode(data.data);
         }
         setLoading(false);
-        console.log(data);
+        // console.log(data);
       });
   };
 
