@@ -48,6 +48,7 @@ const ReactAceCodeEditor = ({
   const [backdropOpen, setBackdropOpen] = useState(false);
   const [status, setStatus] = useState({});
   const [customInput, setCustomInput] = useState('');
+  const debug = useStoreState((state) => state.debug);
   const auth = useStoreState((state) => state.auth);
   const [output, setOuput] = useState('');
   const { subconceptId } = useParams();
@@ -102,7 +103,7 @@ const ReactAceCodeEditor = ({
       });
   };
 
-  const handleSubmit = () => {
+  const handleNormalSubmit = () => {
     setBackdropOpen(true);
     const formData = new FormData();
     formData.append('email', auth.email);
@@ -118,26 +119,19 @@ const ReactAceCodeEditor = ({
       .then((data) => {
         if (data) {
           setBackdropOpen(false);
-          // setOuput(data.stdout);
+          setStatus({
+            description: data.status.description,
+            time: data.time,
+            memory: data.memory,
+          });
+          setSnackbarStates({
+            open: true,
+            severity: calculateSeverity(data.status.description),
+            message: data.status.description,
+          });
           if (data.status.description === 'Accepted') {
-            setStatus({
-              description: data.data.status.description,
-              time: data.data.time,
-              memory: data.data.memory,
-            });
             setShowConfetti(true);
             setOpen(true);
-          } else {
-            setStatus({
-              description: data.data.status.description,
-              time: data.data.time,
-              memory: data.data.memory,
-            });
-            setSnackbarStates({
-              open: true,
-              severity: calculateSeverity(data.status.description),
-              message: data.status.description,
-            });
           }
         } else {
           setBackdropOpen(false);
@@ -156,6 +150,57 @@ const ReactAceCodeEditor = ({
           message: 'Error in submitting the code!',
         });
       });
+  };
+
+  const handleDebugSubmit = () => {
+    setBackdropOpen(true);
+    const formData = new FormData();
+    formData.append('email', auth.email);
+    formData.append('code', value);
+    if (language === 'Python3') formData.append('language', 'Python3');
+    else formData.append('language', 'Java');
+
+    fetch(`${process.env.REACT_APP_SERVER_URL}/debug/${subconceptId}`, {
+      method: 'POST',
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data) {
+          setBackdropOpen(false);
+          setStatus({
+            description: data.status.description,
+            time: data.time,
+            memory: data.memory,
+          });
+          setSnackbarStates({
+            open: true,
+            severity: calculateSeverity(data.status.description),
+            message: data.status.description,
+          });
+          if (data.status.description === 'Accepted') setShowConfetti(true);
+        } else {
+          setBackdropOpen(false);
+          setSnackbarStates({
+            open: true,
+            severity: 'error',
+            message: 'Error in submitting the code',
+          });
+        }
+      })
+      .catch(() => {
+        setBackdropOpen(false);
+        setSnackbarStates({
+          open: true,
+          severity: 'error',
+          message: 'Error in submitting the code!',
+        });
+      });
+  };
+
+  const handleSubmit = () => {
+    if (debug) handleDebugSubmit();
+    else handleNormalSubmit();
   };
 
   return (

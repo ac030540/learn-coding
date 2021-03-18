@@ -31,7 +31,7 @@ const LanguageSelector = ({ output, status }) => {
       <Box className={classes.heading}>OUTPUT:</Box>
       {JSON.stringify(status) !== '{}' && (
         <Box className={classes.heading}>
-          STATUS: {status.description} MEMORY: {status.memory} TIME: {status.time}{' '}
+          STATUS: {status.description}, MEMORY: {status.memory}KB, TIME: {status.time}s{' '}
         </Box>
       )}
       <div className={classes.output}>{output}</div>
