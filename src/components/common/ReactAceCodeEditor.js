@@ -13,9 +13,11 @@ import { useState } from 'react';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import { useParams } from 'react-router';
 import Output from './Output';
 import CustomBackdrop from './Backdrop';
 import { calculateSeverity } from '../../commonFunctions';
+import SubmittedDialog from './SubmittedDialog';
 
 const useStyles = makeStyles((theme) => ({
   editor: {
@@ -44,9 +46,12 @@ const ReactAceCodeEditor = ({
   const classes = useStyles();
   const [allowCustomInput, setAllowCustomInput] = useState(false);
   const [backdropOpen, setBackdropOpen] = useState(false);
+  const [status, setStatus] = useState({});
   const [customInput, setCustomInput] = useState('');
   const auth = useStoreState((state) => state.auth);
   const [output, setOuput] = useState('');
+  const { subconceptId } = useParams();
+  const [open, setOpen] = useState(false);
   const setSnackbarStates = useStoreActions((actions) => actions.setSnackbarStates);
   const setShowConfetti = useStoreActions((actions) => actions.setShowConfetti);
 
@@ -57,6 +62,7 @@ const ReactAceCodeEditor = ({
     formData.append('code', value);
     if (language === 'Python3') formData.append('language', 'Python3');
     else formData.append('language', 'Java');
+    if (allowCustomInput) formData.append('input', customInput);
 
     fetch(`${process.env.REACT_APP_SERVER_URL}/submission/run`, {
       method: 'POST',
@@ -67,6 +73,11 @@ const ReactAceCodeEditor = ({
         if (data.success) {
           setBackdropOpen(false);
           setOuput(data.data.stdout);
+          setStatus({
+            description: data.data.status.description,
+            time: data.data.time,
+            memory: data.data.memory,
+          });
           setSnackbarStates({
             open: true,
             severity: calculateSeverity(data.data.status.description),
@@ -92,12 +103,59 @@ const ReactAceCodeEditor = ({
   };
 
   const handleSubmit = () => {
-    setShowConfetti(true);
-    setSnackbarStates({
-      open: true,
-      severity: 'success',
-      message: 'Accepted',
-    });
+    setBackdropOpen(true);
+    const formData = new FormData();
+    formData.append('email', auth.email);
+    formData.append('code', value);
+    if (language === 'Python3') formData.append('language', 'Python3');
+    else formData.append('language', 'Java');
+
+    fetch(`${process.env.REACT_APP_SERVER_URL}/submission/${subconceptId}`, {
+      method: 'POST',
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data) {
+          setBackdropOpen(false);
+          // setOuput(data.stdout);
+          if (data.status.description === 'Accepted') {
+            setStatus({
+              description: data.data.status.description,
+              time: data.data.time,
+              memory: data.data.memory,
+            });
+            setShowConfetti(true);
+            setOpen(true);
+          } else {
+            setStatus({
+              description: data.data.status.description,
+              time: data.data.time,
+              memory: data.data.memory,
+            });
+            setSnackbarStates({
+              open: true,
+              severity: calculateSeverity(data.status.description),
+              message: data.status.description,
+            });
+          }
+        } else {
+          setBackdropOpen(false);
+          setSnackbarStates({
+            open: true,
+            severity: 'error',
+            message: 'Error in submitting the code',
+          });
+        }
+      })
+      .catch(() => {
+        setBackdropOpen(false);
+        setSnackbarStates({
+          open: true,
+          severity: 'error',
+          message: 'Error in submitting the code!',
+        });
+      });
   };
 
   return (
@@ -129,7 +187,7 @@ const ReactAceCodeEditor = ({
           />
         </Grid>
         <Grid item xs={12}>
-          <Output output={output} />
+          <Output output={output} status={status} />
         </Grid>
         <Grid item xs={12}>
           <Button
@@ -142,15 +200,18 @@ const ReactAceCodeEditor = ({
             run
           </Button>
           {showSubmit && (
-            <Button
-              variant="outlined"
-              color="secondary"
-              onClick={handleSubmit}
-              className={classes.button}
-              startIcon={<SendIcon />}
-            >
-              Submit
-            </Button>
+            <>
+              <Button
+                variant="outlined"
+                color="secondary"
+                onClick={handleSubmit}
+                className={classes.button}
+                startIcon={<SendIcon />}
+              >
+                Submit
+              </Button>
+              <SubmittedDialog open={open} setOpen={setOpen} />
+            </>
           )}
         </Grid>
         <Grid item xs={12}>

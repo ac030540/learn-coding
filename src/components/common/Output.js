@@ -24,11 +24,16 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const LanguageSelector = ({ output }) => {
+const LanguageSelector = ({ output, status }) => {
   const classes = useStyles();
   return (
     <Box className={classes.root}>
       <Box className={classes.heading}>OUTPUT:</Box>
+      {JSON.stringify(status) !== '{}' && (
+        <Box className={classes.heading}>
+          STATUS: {status.description} MEMORY: {status.memory} TIME: {status.time}{' '}
+        </Box>
+      )}
       <div className={classes.output}>{output}</div>
     </Box>
   );
