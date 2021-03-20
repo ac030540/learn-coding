@@ -7,6 +7,7 @@ import Switch from '@material-ui/core/Switch';
 import { Grid, Box, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import PlayArrowIcon from '@material-ui/icons/PlayCircleOutline';
+import DoneIcon from '@material-ui/icons/Done';
 import SendIcon from '@material-ui/icons/Send';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import { useEffect, useState } from 'react';
@@ -38,6 +39,7 @@ const ReactAceCodeEditor = ({
   // placeholder = 'Placeholder Text',
   value,
   setValue,
+  ideMode,
 }) => {
   const onChange = (newValue) => {
     setValue(newValue);
@@ -161,6 +163,47 @@ const ReactAceCodeEditor = ({
       });
   };
 
+  const handleMarkAsComplete = () => {
+    setBackdropOpen(true);
+    const formData = new FormData();
+    formData.append('email', auth.email);
+    if (language === 'Python3') formData.append('language', 'Python3');
+    else formData.append('language', 'Java');
+
+    fetch(`${process.env.REACT_APP_SERVER_URL}/submission/viewOnly/${subconceptId}`, {
+      method: 'POST',
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          setBackdropOpen(false);
+          setSnackbarStates({
+            open: true,
+            severity: 'success',
+            message: 'Marked the sub-concept as completed',
+          });
+          setShowConfetti(true);
+          setOpen(true);
+        } else {
+          setBackdropOpen(false);
+          setSnackbarStates({
+            open: true,
+            severity: 'error',
+            message: 'Error in marking completed',
+          });
+        }
+      })
+      .catch(() => {
+        setBackdropOpen(false);
+        setSnackbarStates({
+          open: true,
+          severity: 'error',
+          message: 'Error in marking completed!',
+        });
+      });
+  };
+
   const handleDebugSubmit = () => {
     setBackdropOpen(true);
     const formData = new FormData();
@@ -265,6 +308,25 @@ const ReactAceCodeEditor = ({
                 Submit
               </Button>
               <SubmittedDialog open={open} setOpen={setOpen} />
+            </>
+          )}
+          {!showSubmit && !ideMode && (
+            <>
+              <Button
+                variant="outlined"
+                color="secondary"
+                onClick={handleMarkAsComplete}
+                className={classes.button}
+                startIcon={<DoneIcon />}
+              >
+                Mark as completed
+              </Button>
+              <SubmittedDialog
+                open={open}
+                setOpen={setOpen}
+                title="Successfully marked the sub-concept as completed"
+                content="Congratulations! You have Successfully completed the subconcept. You can try other subconcepts to master your coding skills."
+              />
             </>
           )}
         </Grid>

@@ -61,7 +61,7 @@ const Editor = () => {
             setLanguage={setLanguage}
           />
         </div>
-        <ReactAceCodeEditor value={value} setValue={setValue} language={language} />
+        <ReactAceCodeEditor ideMode value={value} setValue={setValue} language={language} />
       </Container>
     </div>
   );

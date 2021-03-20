@@ -6,7 +6,12 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useHistory } from 'react-router';
 
-export default function AlertDialog({ open, setOpen }) {
+export default function AlertDialog({
+  open,
+  setOpen,
+  title = 'Successfully submitted the problem',
+  content = 'Congratulations! You have Successfully submitted the problem. You can try other subconcepts to master your coding skills.',
+}) {
   const history = useHistory();
   const handleClose = () => {
     setOpen(false);
@@ -20,12 +25,9 @@ export default function AlertDialog({ open, setOpen }) {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">Successfully submitted the problem</DialogTitle>
+        <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Congratulations! You have Successfully submitted the problem. You can try other
-            subconcepts to master your coding skills.
-          </DialogContentText>
+          <DialogContentText id="alert-dialog-description">{content}</DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => history.goBack()} color="primary" variant="outlined">
