@@ -4,43 +4,14 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useHistory } from 'react-router-dom';
 import Loading from '../common/Loading';
-
-const useStyles = makeStyles((theme) => ({
-  '@global': {
-    ul: {
-      margin: 0,
-      padding: 0,
-      listStyle: 'none',
-    },
-  },
-  link: {
-    margin: theme.spacing(1, 1.5),
-  },
-  heroContent: {
-    padding: theme.spacing(8, 0, 6),
-  },
-  cardHeader: {
-    backgroundColor:
-      theme.palette.type === 'light' ? theme.palette.secondary.main : theme.palette.grey[700],
-    color: 'white',
-  },
-  progress: {
-    display: 'flex',
-    justifyContent: 'center',
-    // alignItems: 'center',
-    // marginBottom: theme.spacing(2),
-  },
-  progressText: {
-    marginBottom: theme.spacing(3),
-  },
-}));
 
 const levels = [
   {
@@ -64,6 +35,46 @@ const levels = [
 ];
 
 const Homepage = () => {
+  const currentTheme = useTheme();
+  const smAndBelow = useMediaQuery(currentTheme.breakpoints.down('sm'));
+
+  const useStyles = makeStyles((theme) => ({
+    '@global': {
+      ul: {
+        margin: 0,
+        padding: 0,
+        listStyle: 'none',
+      },
+    },
+    subHeading: {
+      margin: theme.spacing(2),
+      marginBottom: 0,
+    },
+    link: {
+      margin: theme.spacing(1, 1.5),
+    },
+    heroContent: smAndBelow
+      ? {
+          padding: theme.spacing(4, 0, 4),
+        }
+      : {
+          padding: theme.spacing(8, 0, 6),
+        },
+    cardHeader: {
+      backgroundColor:
+        theme.palette.type === 'light' ? theme.palette.secondary.main : theme.palette.grey[700],
+      color: 'white',
+    },
+    progress: {
+      display: 'flex',
+      justifyContent: 'center',
+      // alignItems: 'center',
+      // marginBottom: theme.spacing(2),
+    },
+    progressText: {
+      marginBottom: theme.spacing(3),
+    },
+  }));
   const classes = useStyles();
   const auth = useStoreState((state) => state.auth);
   const setLevel = useStoreActions((actions) => actions.setLevel);
@@ -96,11 +107,17 @@ const Homepage = () => {
     <>
       <CssBaseline />
       {/* Hero unit */}
-      <Container maxWidth="sm" component="main" className={classes.heroContent}>
-        <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
+      <Container maxWidth="md" component="main" className={classes.heroContent}>
+        <Typography component="h1" variant="h3" align="center" color="textPrimary">
           Levels
         </Typography>
-        <Typography variant="h5" align="center" color="textSecondary" component="p">
+        <Typography
+          className={classes.subHeading}
+          variant="h6"
+          align="center"
+          color="textSecondary"
+          component="p"
+        >
           Select a level according to your comfort zone and start learning
         </Typography>
       </Container>

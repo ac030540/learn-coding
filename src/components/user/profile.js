@@ -49,7 +49,7 @@ const Profile = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch(`${process.env.REACT_APP_SERVER_URL}/submission/user/${auth.id}`, {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/submission/user/${auth.email}`, {
       method: 'GET',
     })
       .then((response) => response.json())
