@@ -45,7 +45,7 @@ const EditConcepts = () => {
   // console.log(concepts);
   useEffect(() => {
     // fetching the data of the concepts
-    fetch(`${process.env.REACT_APP_SERVER_URL}/concept/${conceptId}`, {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/concept/${conceptId}?email=${auth.email}`, {
       method: 'GET',
     })
       .then((response) => response.json())
