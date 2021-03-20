@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItem from '@material-ui/core/ListItem';
 import { grey } from '@material-ui/core/colors';
+import NoData from '../common/NoData';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ReferenceCard = ({ references }) => {
   const classes = useStyles();
-  return (
+  return references.length !== 0 ? (
     <div className={classes.root}>
       {references.map((reference) => (
         <div
@@ -37,6 +38,8 @@ const ReferenceCard = ({ references }) => {
         </div>
       ))}
     </div>
+  ) : (
+    <NoData />
   );
 };
 
