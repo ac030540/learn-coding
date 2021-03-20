@@ -9,7 +9,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 const columns = [
   { id: '#', label: '#', minWidth: 100, align: 'center' },
@@ -64,17 +64,26 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SubmissionsTable({ submissions }) {
+export default function SubmissionsTable({
+  submissions,
+  page,
+  setPage,
+  setRowsPerPage,
+  rowsPerPage,
+}) {
   const classes = useStyles();
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const history = useHistory();
 
   const handleChangePage = (event, newPage) => {
+    history.push({
+      pathname: '/profile',
+      search: `?page=${newPage}`,
+    });
     setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
+    setRowsPerPage(event.target.value);
     setPage(0);
   };
 
@@ -134,9 +143,9 @@ export default function SubmissionsTable({ submissions }) {
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
-        count={rows.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
+        count={rows.length} // total rows
+        rowsPerPage={rowsPerPage} // limit
+        page={page} // page number
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />

@@ -6,6 +6,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useStoreState } from 'easy-peasy';
+import queryString from 'query-string';
+import { useLocation } from 'react-router';
 import SubmissionsTable from './SubmissionsTable';
 import Loading from '../common/Loading';
 
@@ -26,8 +28,12 @@ const useStyles = makeStyles((theme) => ({
 const Profile = () => {
   const classes = useStyles();
   const [loading, setLoading] = useState(true);
+  const location = useLocation();
   const [submissions, setSubmissions] = useState([]);
+  const { page: pageNumber } = queryString.parse(location.search);
   const auth = useStoreState((state) => state.auth);
+  const [page, setPage] = useState(pageNumber ? Number(pageNumber) : 0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_SERVER_URL}/submission/user/${auth.id}`, {
@@ -58,7 +64,13 @@ const Profile = () => {
           {auth.email}
         </Typography>
       </div>
-      <SubmissionsTable submissions={submissions} />
+      <SubmissionsTable
+        page={page}
+        setPage={setPage}
+        setRowsPerPage={setRowsPerPage}
+        rowsPerPage={rowsPerPage}
+        submissions={submissions}
+      />
     </Container>
   );
 };
