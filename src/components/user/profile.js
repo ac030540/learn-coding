@@ -49,15 +49,15 @@ const Profile = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch(`${process.env.REACT_APP_SERVER_URL}/submission/user/${auth.email}`, {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/submission/user/${auth.email}/${rowsPerPage}`, {
       method: 'GET',
     })
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
-          setSubmissions(data.data);
+          setSubmissions(data.data.result);
           setLoading(false);
-          setTotalEntries(1);
+          setTotalEntries(data.data.count);
         }
       });
   }, [page, rowsPerPage]);
@@ -90,6 +90,7 @@ const Profile = () => {
           setRowsPerPage={setRowsPerPage}
           rowsPerPage={rowsPerPage}
           submissions={submissions}
+          totalEntries={totalEntries}
         />
       )}
     </Container>
