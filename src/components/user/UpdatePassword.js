@@ -16,6 +16,10 @@ const useStyles = makeStyles((theme) => ({
   grid: {
     marginTop: theme.spacing(2),
   },
+  gridItem: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
 }));
 
 const UpdatePassword = ({ setLoading }) => {
@@ -63,7 +67,7 @@ const UpdatePassword = ({ setLoading }) => {
               registered email address.
             </Typography>
           </Grid>
-          <Grid item lg={3}>
+          <Grid className={classes.gridItem} item lg={3}>
             <Button
               onClick={handleUpdatePassword}
               variant="outlined"
