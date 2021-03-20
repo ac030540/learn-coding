@@ -24,6 +24,8 @@ const DebugMode = ({ language, setCode }) => {
   const debug = useStoreState((state) => state.debug);
   // const auth = useStoreState((state) => state.auth);
   const setDebug = useStoreActions((actions) => actions.setDebug);
+  const setOutput = useStoreActions((actions) => actions.setOutput);
+  const setStatus = useStoreActions((actions) => actions.setStatus);
   const { subconceptId } = useParams();
   const [loading, setLoading] = useState(false);
 
@@ -31,6 +33,8 @@ const DebugMode = ({ language, setCode }) => {
     // const formData = new FormData();
     // formData.append('email', auth.email);
     setLoading(true);
+    setOutput('');
+    setStatus({});
     fetch(`${process.env.REACT_APP_SERVER_URL}/debug/${subconceptId}/${language}`, {
       method: 'GET',
     })

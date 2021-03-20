@@ -35,6 +35,14 @@ const store = createStore({
   setDebug: action((state, payload) => {
     state.debug = payload;
   }),
+  status: {},
+  setStatus: action((state, payload) => {
+    state.status = payload;
+  }),
+  output: '',
+  setOutput: action((state, payload) => {
+    state.output = payload;
+  }),
   showConfetti: false,
   setShowConfetti: action((state, payload) => {
     state.showConfetti = payload;

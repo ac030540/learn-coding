@@ -46,15 +46,15 @@ const ReactAceCodeEditor = ({
   const classes = useStyles();
   const [allowCustomInput, setAllowCustomInput] = useState(false);
   const [backdropOpen, setBackdropOpen] = useState(false);
-  const [status, setStatus] = useState({});
   const [customInput, setCustomInput] = useState('');
   const debug = useStoreState((state) => state.debug);
   const auth = useStoreState((state) => state.auth);
-  const [output, setOuput] = useState('');
   const { subconceptId } = useParams();
   const [open, setOpen] = useState(false);
   const setSnackbarStates = useStoreActions((actions) => actions.setSnackbarStates);
+  const setStatus = useStoreActions((actions) => actions.setStatus);
   const setShowConfetti = useStoreActions((actions) => actions.setShowConfetti);
+  const setOutput = useStoreActions((actions) => actions.setOutput);
 
   const handleRun = () => {
     setBackdropOpen(true);
@@ -73,7 +73,7 @@ const ReactAceCodeEditor = ({
       .then((data) => {
         if (data.success) {
           setBackdropOpen(false);
-          setOuput(data.data.stdout);
+          setOutput(data.data.stdout);
           setStatus({
             description: data.data.status.description,
             time: data.data.time,
@@ -232,7 +232,7 @@ const ReactAceCodeEditor = ({
           />
         </Grid>
         <Grid item xs={12}>
-          <Output output={output} status={status} />
+          <Output />
         </Grid>
         <Grid item xs={12}>
           <Button

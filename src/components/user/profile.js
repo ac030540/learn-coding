@@ -36,6 +36,7 @@ const Profile = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
   useEffect(() => {
+    setLoading(true);
     fetch(`${process.env.REACT_APP_SERVER_URL}/submission/user/${auth.id}`, {
       method: 'GET',
     })
@@ -46,7 +47,7 @@ const Profile = () => {
           setLoading(false);
         }
       });
-  }, []);
+  }, [page, rowsPerPage]);
 
   return loading ? (
     <Loading />

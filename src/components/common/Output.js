@@ -1,4 +1,5 @@
 import Box from '@material-ui/core/Box';
+import { useStoreState } from 'easy-peasy';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(() => ({
@@ -24,8 +25,10 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const LanguageSelector = ({ output, status }) => {
+const LanguageSelector = () => {
   const classes = useStyles();
+  const output = useStoreState((state) => state.output);
+  const status = useStoreState((state) => state.status);
   return (
     <Box className={classes.root}>
       <Box className={classes.heading}>OUTPUT:</Box>
