@@ -44,6 +44,7 @@ const Concepts = ({ userRoute }) => {
 
   useEffect(() => {
     // fetching the data of the concepts
+    setLoading(true);
     fetch(`${process.env.REACT_APP_SERVER_URL}/concept?category=${level}&email=${auth.email}`, {
       method: 'GET',
     })
