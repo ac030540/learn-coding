@@ -9,7 +9,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import PlayArrowIcon from '@material-ui/icons/PlayCircleOutline';
 import SendIcon from '@material-ui/icons/Send';
 import { useStoreState, useStoreActions } from 'easy-peasy';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -102,6 +102,15 @@ const ReactAceCodeEditor = ({
         });
       });
   };
+
+  useEffect(
+    () => () => {
+      // clean up event
+      setStatus({});
+      setOutput('');
+    },
+    []
+  );
 
   const handleNormalSubmit = () => {
     setBackdropOpen(true);

@@ -4,6 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import { CssBaseline, Box } from '@material-ui/core';
 import Container from '@material-ui/core/Container';
+import { useStoreActions } from 'easy-peasy';
 import Loading from '../common/Loading';
 import MainPageBreadcrums from './MainPageBreadcrums';
 import LanguageSelector from './LanguageSelector';
@@ -37,6 +38,7 @@ const MainPage = ({ adminRoute }) => {
   const [languagesArray, setLanguagesArray] = useState([]);
   const [code, setCode] = useState('');
   const { subconceptId } = useParams();
+  const setDebug = useStoreActions((actions) => actions.setDebug);
   const classes = useStyles();
   // console.log(subconcept);
   useEffect(() => {
@@ -60,6 +62,14 @@ const MainPage = ({ adminRoute }) => {
         }
       });
   }, [language]);
+
+  useEffect(
+    () => () => {
+      // clean up event
+      setDebug(false);
+    },
+    []
+  );
 
   return (
     <div>
