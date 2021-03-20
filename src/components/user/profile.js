@@ -10,6 +10,7 @@ import queryString from 'query-string';
 import { useLocation } from 'react-router';
 import SubmissionsTable from './SubmissionsTable';
 import Loading from '../common/Loading';
+import NoData from '../common/NoData';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -23,6 +24,16 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
+  title: {
+    flex: '1 1 100%',
+    width: '100%',
+    margin: theme.spacing(2),
+    marginLeft: theme.spacing(0),
+    marginBottom: theme.spacing(1),
+    // paddingRight: theme.spacing(1),
+    color: theme.palette.primary.main,
+    // backgroundColor: lighten(theme.palette.text.primary, 0.5),
+  },
 }));
 
 const Profile = () => {
@@ -34,6 +45,7 @@ const Profile = () => {
   const auth = useStoreState((state) => state.auth);
   const [page, setPage] = useState(pageNumber ? Number(pageNumber) : 0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [totalEntries, setTotalEntries] = useState(0);
 
   useEffect(() => {
     setLoading(true);
@@ -45,6 +57,7 @@ const Profile = () => {
         if (data.success) {
           setSubmissions(data.data);
           setLoading(false);
+          setTotalEntries(1);
         }
       });
   }, [page, rowsPerPage]);
@@ -65,13 +78,20 @@ const Profile = () => {
           {auth.email}
         </Typography>
       </div>
-      <SubmissionsTable
-        page={page}
-        setPage={setPage}
-        setRowsPerPage={setRowsPerPage}
-        rowsPerPage={rowsPerPage}
-        submissions={submissions}
-      />
+      <Typography className={classes.title} variant="h5" id="tableTitle">
+        Submissions
+      </Typography>
+      {totalEntries === 0 ? (
+        <NoData text="No Submissions Yet" />
+      ) : (
+        <SubmissionsTable
+          page={page}
+          setPage={setPage}
+          setRowsPerPage={setRowsPerPage}
+          rowsPerPage={rowsPerPage}
+          submissions={submissions}
+        />
+      )}
     </Container>
   );
 };

@@ -1,7 +1,6 @@
 import React from 'react';
-import { makeStyles, lighten } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -53,15 +52,6 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: 'none',
     color: theme.palette.primary.main,
   },
-  title: {
-    flex: '1 1 100%',
-    width: '100%',
-    padding: theme.spacing(2),
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(1),
-    color: theme.palette.primary.main,
-    backgroundColor: lighten(theme.palette.text.primary, 0.975),
-  },
 }));
 
 export default function SubmissionsTable({
@@ -90,9 +80,6 @@ export default function SubmissionsTable({
   return (
     <Paper className={classes.root}>
       <TableContainer className={classes.container}>
-        <Typography className={classes.title} variant="h5" id="tableTitle">
-          Submissions
-        </Typography>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>

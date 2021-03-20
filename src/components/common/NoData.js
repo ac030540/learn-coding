@@ -16,14 +16,14 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
   },
 }));
-const NoData = () => {
+const NoData = ({ text = 'No data found' }) => {
   const classes = useStyles();
   return (
     <Container className={classes.root} maxWidth="sm">
       <img className={classes.image} src={NoDataImage} alt="No data Found" />
       <Box className={classes.text}>
         <Typography color="secondary" variant="h4">
-          No data found
+          {text}
         </Typography>
       </Box>
     </Container>
