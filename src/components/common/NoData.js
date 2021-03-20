@@ -4,11 +4,11 @@ import NoDataImage from '../../assets/undraw_not_found.svg';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    marginTop: theme.spacing(4),
+    // marginTop: theme.spacing(4),
   },
   image: {
     height: 'auto',
-    width: '100%',
+    width: '50%',
   },
   text: {
     marginTop: theme.spacing(4),
@@ -20,9 +20,11 @@ const NoData = ({ text = 'No data found' }) => {
   const classes = useStyles();
   return (
     <Container className={classes.root} maxWidth="sm">
-      <img className={classes.image} src={NoDataImage} alt="No data Found" />
       <Box className={classes.text}>
-        <Typography color="secondary" variant="h4">
+        <img className={classes.image} src={NoDataImage} alt="No data Found" />
+      </Box>
+      <Box className={classes.text}>
+        <Typography color="secondary" variant="h5">
           {text}
         </Typography>
       </Box>

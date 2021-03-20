@@ -8,6 +8,8 @@ import { CssBaseline, TextField, Box } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Pagination from '@material-ui/lab/Pagination';
+import CloseIcon from '@material-ui/icons/Close';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import ReferenceCard from './ReferenceCard';
 import Loading from '../common/Loading';
 
@@ -37,6 +39,9 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
   },
+  close: {
+    cursor: 'pointer',
+  },
 }));
 
 const References = () => {
@@ -49,6 +54,7 @@ const References = () => {
   const history = useHistory();
   const [showPagination, setShowPagination] = useState(true);
   const [references, setReferences] = useState([]);
+  const [pages, setPages] = useState(0);
 
   // const [updatedReferences, setUpdatedReferences] = useState([]);
   const handleSearch = (e) => {
@@ -91,7 +97,8 @@ const References = () => {
         if (data.success) {
           // setUpdatedReferences(data.data);
           setShowPagination(true);
-          setReferences(data.data);
+          setPages(data.data.count);
+          setReferences(data.data.result);
           setLoading(false);
         }
       });
@@ -133,12 +140,23 @@ const References = () => {
             label="Search"
             name="search"
             autoComplete="search"
+            InputProps={{
+              endAdornment: (
+                <InputAdornment
+                  onClick={() => setSearch('')}
+                  className={classes.close}
+                  position="start"
+                >
+                  <CloseIcon color="action" />
+                </InputAdornment>
+              ),
+            }}
           />
         </div>
         <ReferenceCard references={references} />
         {showPagination && (
           <Box className={classes.pagination}>
-            <Pagination page={page} onChange={handlePageChange} count={10} color="secondary" />
+            <Pagination page={page} onChange={handlePageChange} count={pages} color="secondary" />
           </Box>
         )}
       </Container>

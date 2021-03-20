@@ -16,6 +16,7 @@ import * as PasswordValidator from 'password-validator';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import Loading from '../common/Loading';
 import { auth as firebaseAuth } from '../../firebase.config';
+import PasswordField from '../common/PasswordField';
 // import useRedirectSignedUser from '../../customHooks/useRedirectSignedUser';
 
 const useStyles = makeStyles((theme) => ({
@@ -236,7 +237,7 @@ const SignUp = () => {
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
+              <PasswordField
                 variant="outlined"
                 required
                 fullWidth

@@ -14,6 +14,7 @@ import Container from '@material-ui/core/Container';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import Loading from '../common/Loading';
 import { auth as firebaseAuth } from '../../firebase.config';
+import PasswordField from '../common/PasswordField';
 // import useRedirectSignedUser from '../../customHooks/useRedirectSignedUser';
 
 const useStyles = makeStyles((theme) => ({
@@ -134,7 +135,7 @@ const SignIn = () => {
               error={error}
               autoFocus
             />
-            <TextField
+            <PasswordField
               variant="outlined"
               margin="normal"
               required
