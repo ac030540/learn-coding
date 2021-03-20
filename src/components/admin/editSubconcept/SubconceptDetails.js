@@ -38,13 +38,13 @@ export default function ConceptDetails({
 
   useEffect(() => {
     // fetching the data of the concepts
-    fetch(`${process.env.REACT_APP_SERVER_URL}/references`, {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/references?page=1`, {
       method: 'GET',
     })
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
-          setOptions(data.data);
+          setOptions(data.data.result);
           setLoading(false);
         }
       });
