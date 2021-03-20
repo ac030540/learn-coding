@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useHistory, useParams } from 'react-router';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
@@ -52,38 +52,42 @@ const SubmissionPage = () => {
       });
   }, []);
 
-  let breadcrumbsData = [];
-  if (!loading) {
-    const javaCode = '```java ';
-    const pythonCode = '```python ';
-    if (submissionDetails.language === 'Python3')
-      submissionDetails.code = pythonCode.concat(submissionDetails.code);
-    else submissionDetails.code = javaCode.concat(submissionDetails.code);
-    breadcrumbsData = [
-      {
-        text: submissionDetails.conceptId.category,
-        onClick: () => {
-          setLevel(submissionDetails.conceptId.category);
-          history.push('/concepts');
+  const breadcrumbsData = useRef([]);
+  useEffect(() => {
+    if (JSON.stringify(submissionDetails) !== '{}') {
+      const javaCode = '```java ';
+      const pythonCode = '```python ';
+      if (submissionDetails.language === 'Python3')
+        submissionDetails.code = pythonCode.concat(submissionDetails.code);
+      else submissionDetails.code = javaCode.concat(submissionDetails.code);
+      breadcrumbsData.current = [
+        {
+          text: submissionDetails.conceptId.category,
+          onClick: () => {
+            setLevel(submissionDetails.conceptId.category);
+            history.push('/concepts');
+          },
         },
-      },
-      {
-        text: submissionDetails.conceptId.title,
-        onClick: () => {
-          history.push(`/concepts/${submissionDetails.conceptId._id}`);
+        {
+          text: submissionDetails.conceptId.title,
+          onClick: () => {
+            setLevel(submissionDetails.conceptId.category);
+            history.push(`/concepts/${submissionDetails.conceptId._id}`);
+          },
         },
-      },
-      {
-        text: submissionDetails.subConceptId.title,
-        onClick: () => {
-          history.push(`/subconcepts/${submissionDetails.subConceptId._id}`);
+        {
+          text: submissionDetails.subConceptId.title,
+          onClick: () => {
+            setLevel(submissionDetails.conceptId.category);
+            history.push(`/subconcepts/${submissionDetails.subConceptId._id}`);
+          },
         },
-      },
-      {
-        text: 'Submission',
-      },
-    ];
-  }
+        {
+          text: 'Submission',
+        },
+      ];
+    }
+  }, [submissionDetails]);
 
   return (
     <div>
@@ -101,7 +105,7 @@ const SubmissionPage = () => {
               </Grid>
               <Grid item xs={12}>
                 <Box className={classes.breadcrumbs}>
-                  <Breadcrumbs data={breadcrumbsData} />
+                  <Breadcrumbs data={breadcrumbsData.current} />
                 </Box>
               </Grid>
               <Grid item xs={12}>
@@ -109,9 +113,17 @@ const SubmissionPage = () => {
               </Grid>
               <Grid item xs={12}>
                 <Typography variant="body1">CODE:</Typography>
-                <div className={classes.code}>
-                  <Viewer value={submissionDetails.code} />
-                </div>
+                {submissionDetails.code === '```python  ' ||
+                submissionDetails.code === '```java  ' ? (
+                  <Typography variant="body1" color="textSecondary">
+                    The sub-concept didn&apos;t have any problem to solve hence there is no code
+                    available.
+                  </Typography>
+                ) : (
+                  <div className={classes.code}>
+                    <Viewer value={submissionDetails.code} />
+                  </div>
+                )}
               </Grid>
             </Grid>
           </Container>
