@@ -1,6 +1,6 @@
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-import { Card, Divider } from '@material-ui/core';
+import { Card, Divider, Tooltip } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import Beginner from '../../assets/Beginner.svg';
 import Advanced from '../../assets/Advanced.svg';
@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SubmissionPage = () => {
+const Badges = () => {
   const classes = useStyles();
 
   return (
@@ -45,17 +45,35 @@ const SubmissionPage = () => {
       <Divider />
       <Grid className={classes.content} container spacing={4}>
         <Grid item xs={4} sm={3} md={2}>
-          <img className={classes.badges} src={Beginner} alt="Beginner badge" />
+          <Tooltip title="Complete Beginner level to unlock" arrow>
+            <img
+              className={`${classes.badges} ${classes.blurred}`}
+              src={Beginner}
+              alt="Beginner badge"
+            />
+          </Tooltip>
         </Grid>
         <Grid item xs={4} sm={3} md={2}>
-          <img className={classes.badges} src={Advanced} alt="Advanced badge" />
+          <Tooltip title="Complete Advanced level to unlock" arrow>
+            <img
+              className={`${classes.badges} ${classes.blurred}`}
+              src={Advanced}
+              alt="Advanced badge"
+            />
+          </Tooltip>
         </Grid>
         <Grid item xs={4} sm={3} md={2}>
-          <img className={classes.badges} src={Expert} alt="Expert badge" />
+          <Tooltip title="Complete Expert level to unlock" arrow>
+            <img
+              className={`${classes.badges} ${classes.blurred}`}
+              src={Expert}
+              alt="Expert badge"
+            />
+          </Tooltip>
         </Grid>
       </Grid>
     </Card>
   );
 };
 
-export default SubmissionPage;
+export default Badges;

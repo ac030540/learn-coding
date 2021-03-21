@@ -16,7 +16,9 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(2),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2),
+    margin: theme.spacing(3),
+    marginLeft: theme.spacing(0),
+    marginRight: theme.spacing(2),
   },
   titleWrapper: {
     marginTop: theme.spacing(8),
@@ -106,6 +108,14 @@ const CreateConcepts = () => {
           className={classes.submit}
         >
           Create
+        </Button>
+        <Button
+          variant="outlined"
+          onClick={() => history.goBack()}
+          color="primary"
+          className={classes.submit}
+        >
+          cancel
         </Button>
       </div>
     </Container>
