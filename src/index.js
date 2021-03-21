@@ -2,19 +2,36 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { StoreProvider } from 'easy-peasy';
 import { BrowserRouter } from 'react-router-dom';
+import CssBaseline from '@material-ui/core/CssBaseline';
+// import { grey } from '@material-ui/core/colors';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import store from './store';
 import './index.css';
 import 'fontsource-roboto';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+const theme = createMuiTheme({
+  palette: {
+    type: 'light',
+    // background: {
+    //   paper: '#222222',
+    //   default: '#101010',
+    // },
+    // divider: grey[400],
+  },
+});
+
 ReactDOM.render(
   // <React.StrictMode>
-  <StoreProvider store={store}>
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
-      <App />
-    </BrowserRouter>
-  </StoreProvider>,
+  <ThemeProvider theme={theme}>
+    <CssBaseline />
+    <StoreProvider store={store}>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
+        <App />
+      </BrowserRouter>
+    </StoreProvider>
+  </ThemeProvider>,
   document.getElementById('root')
 );
 
