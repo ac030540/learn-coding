@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     height: 'auto',
   },
   blurred: {
-    filter: 'blur(3px)',
+    filter: 'blur(2px)',
   },
 }));
 
