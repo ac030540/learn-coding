@@ -13,8 +13,8 @@ const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: theme.spacing(2),
   },
-  grid: {
-    marginTop: theme.spacing(2),
+  title: {
+    padding: theme.spacing(2),
   },
   gridItem: {
     display: 'flex',
@@ -55,14 +55,14 @@ const UpdatePassword = ({ setLoading }) => {
 
   return (
     <Card className={classes.root}>
+      <Typography className={classes.title} variant="h5" color="primary" component="h2">
+        Update Password
+      </Typography>
+      <Divider />
       <CardContent>
-        <Typography gutterBottom variant="h5" component="h2">
-          Update Password
-        </Typography>
-        <Divider />
-        <Grid className={classes.grid} container justify="space-between" spacing={2}>
+        <Grid container justify="space-between" spacing={2}>
           <Grid item lg={9}>
-            <Typography component="h1" variant="body2">
+            <Typography color="textSecondary" component="h1" variant="body2">
               Want to update your password? We will send you a password reset link on your
               registered email address.
             </Typography>

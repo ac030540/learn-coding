@@ -5,12 +5,15 @@ import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import Card from '@material-ui/core/Card';
 import { useStoreState } from 'easy-peasy';
 import queryString from 'query-string';
 import { useLocation } from 'react-router';
+import { Divider } from '@material-ui/core';
 import SubmissionsTable from './SubmissionsTable';
 import Loading from '../common/Loading';
 import NoData from '../common/NoData';
+import Badges from './Badges';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -28,11 +31,13 @@ const useStyles = makeStyles((theme) => ({
     flex: '1 1 100%',
     width: '100%',
     margin: theme.spacing(2),
-    marginLeft: theme.spacing(0),
-    marginBottom: theme.spacing(1),
+    marginBottom: theme.spacing(2),
     // paddingRight: theme.spacing(1),
     color: theme.palette.primary.main,
     // backgroundColor: lighten(theme.palette.text.primary, 0.5),
+  },
+  submissions: {
+    marginBottom: theme.spacing(2),
   },
 }));
 
@@ -78,21 +83,25 @@ const Profile = () => {
           {auth.email}
         </Typography>
       </div>
-      <Typography className={classes.title} variant="h5" id="tableTitle">
-        Submissions
-      </Typography>
-      {totalEntries === 0 ? (
-        <NoData text="No Submissions Yet" />
-      ) : (
-        <SubmissionsTable
-          page={page}
-          setPage={setPage}
-          setRowsPerPage={setRowsPerPage}
-          rowsPerPage={rowsPerPage}
-          submissions={submissions}
-          totalEntries={totalEntries}
-        />
-      )}
+      <Badges />
+      <Card className={classes.submissions}>
+        <Typography className={classes.title} variant="h5" id="tableTitle">
+          Submissions
+        </Typography>
+        <Divider />
+        {totalEntries === 0 ? (
+          <NoData text="No Submissions Yet" />
+        ) : (
+          <SubmissionsTable
+            page={page}
+            setPage={setPage}
+            setRowsPerPage={setRowsPerPage}
+            rowsPerPage={rowsPerPage}
+            submissions={submissions}
+            totalEntries={totalEntries}
+          />
+        )}
+      </Card>
     </Container>
   );
 };

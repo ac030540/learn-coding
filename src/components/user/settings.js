@@ -3,6 +3,7 @@ import Avatar from '@material-ui/core/Avatar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import SettingsIcon from '@material-ui/icons/Settings';
 import Typography from '@material-ui/core/Typography';
+import { useStoreState } from 'easy-peasy';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import EditPersonalDetails from './EditPersonalDetails';
@@ -25,6 +26,8 @@ const useStyles = makeStyles((theme) => ({
 const Settings = () => {
   const classes = useStyles();
   const [loading, setLoading] = useState(false);
+  const auth = useStoreState((states) => states.auth);
+
   return (
     <Container component="main" maxWidth="md">
       <CssBaseline />
@@ -35,6 +38,9 @@ const Settings = () => {
         </Avatar>
         <Typography component="h1" variant="h6">
           Account Settings
+        </Typography>
+        <Typography component="h1" variant="body2">
+          {auth.email}
         </Typography>
       </div>
       <EditPersonalDetails setLoading={setLoading} />

@@ -11,15 +11,18 @@ import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles((theme) => ({
-  paper: {
+  root: {
     marginTop: theme.spacing(4),
   },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+  title: {
+    padding: theme.spacing(2),
   },
   button: {
     margin: theme.spacing(1),
+    marginTop: 0,
+  },
+  divider: {
+    marginBottom: theme.spacing(1),
   },
 }));
 
@@ -77,60 +80,55 @@ const EditPersonalDetails = ({ setLoading }) => {
   };
 
   return (
-    <div className={classes.paper}>
-      <Divider />
-      <Card className={classes.root}>
-        <CardContent>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Typography gutterBottom variant="h5" component="h2">
-                Personal Information
-              </Typography>
-              <Divider />
-            </Grid>
-            <Grid item xs={12}>
-              <Typography gutterBottom variant="body1" color="textSecondary" component="p">
-                Email: {auth.email}
-              </Typography>
-            </Grid>
-            <Grid item xs={12} sm={3}>
-              <TextField
-                variant="outlined"
-                fullWidth
-                id="firstName"
-                label="First Name"
-                name="firstName"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-                autoComplete="firstName"
-              />
-            </Grid>
-            <Grid item xs={12} sm={3}>
-              <TextField
-                variant="outlined"
-                fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-                autoComplete="lastName"
-              />
-            </Grid>
+    <Card className={classes.root}>
+      <Typography className={classes.title} color="primary" variant="h5" component="h2">
+        Personal Information
+      </Typography>
+      <Divider className={classes.divider} />
+      <CardContent>
+        <Grid container spacing={2}>
+          {/* <Grid item xs={12}>
+            <Typography gutterBottom variant="body1" color="textSecondary" component="p">
+              Email: {auth.email}
+            </Typography>
+          </Grid> */}
+          <Grid item xs={12} sm={3}>
+            <TextField
+              variant="outlined"
+              fullWidth
+              id="firstName"
+              label="First Name"
+              name="firstName"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              autoComplete="firstName"
+            />
           </Grid>
-        </CardContent>
-        <CardActions>
-          <Button
-            onClick={handleUpdateDetails}
-            className={classes.button}
-            variant="outlined"
-            color="primary"
-          >
-            Update
-          </Button>
-        </CardActions>
-      </Card>
-    </div>
+          <Grid item xs={12} sm={3}>
+            <TextField
+              variant="outlined"
+              fullWidth
+              id="lastName"
+              label="Last Name"
+              name="lastName"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              autoComplete="lastName"
+            />
+          </Grid>
+        </Grid>
+      </CardContent>
+      <CardActions>
+        <Button
+          onClick={handleUpdateDetails}
+          className={classes.button}
+          variant="outlined"
+          color="primary"
+        >
+          Update
+        </Button>
+      </CardActions>
+    </Card>
   );
 };
 
