@@ -1,6 +1,8 @@
 import Box from '@material-ui/core/Box';
 import { useStoreState } from 'easy-peasy';
 import { makeStyles } from '@material-ui/core/styles';
+import { ResizableBox } from 'react-resizable';
+import '../../../node_modules/react-resizable/css/styles.css';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -18,10 +20,10 @@ const useStyles = makeStyles(() => ({
     padding: '10px',
   },
   output: {
-    height: '100px',
+    // height: '100px',
     padding: '10px',
-    overflow: 'scroll',
-    whiteSpace: 'pre',
+    // overflow: 'scroll',
+    // whiteSpace: 'pre',
   },
 }));
 
@@ -37,7 +39,16 @@ const LanguageSelector = () => {
           STATUS: {status.description}, MEMORY: {status.memory}KB, TIME: {status.time}s{' '}
         </Box>
       )}
-      <div className={classes.output}>{output}</div>
+      <ResizableBox
+        style={{ overflow: 'scroll', whiteSpace: 'pre' }}
+        height={100}
+        width={Infinity}
+        axis="y"
+        minConstraints={[Infinity, 100]}
+        resizeHandles={['s']}
+      >
+        <div className={classes.output}>{output}</div>
+      </ResizableBox>
     </Box>
   );
 };

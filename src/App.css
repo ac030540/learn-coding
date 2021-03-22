@@ -27,3 +27,7 @@
 .ace_print-margin {
   visibility: hidden !important;
 }
+/* 
+.react-resizable-handle {
+  background-image: url('./assets/white-arrow.png') !important;
+} */
