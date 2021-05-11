@@ -17,25 +17,23 @@ const levels = [
   {
     title: 'Beginner',
     value: 'Beginner',
-    progress: '0',
     description: ['Basic concepts', 'Loops', 'Arrays', 'conditionals'],
   },
   {
     title: 'Advanced',
     value: 'Advanced',
-    progress: '0',
     description: ['Intermediate concepts', 'OOPM', 'Functional programming', 'High level concepts'],
   },
   {
     title: 'Expert',
     value: 'Expert',
-    progress: '0',
     description: ['Expert level concepts', 'Time complexity', 'Space complexity', 'Code debugging'],
   },
 ];
 
 const Homepage = () => {
   const currentTheme = useTheme();
+  const [progress, setProgress] = useState([0, 0, 0]);
   const smAndBelow = useMediaQuery(currentTheme.breakpoints.down('sm'));
 
   const useStyles = makeStyles((theme) => ({
@@ -93,9 +91,11 @@ const Homepage = () => {
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
-          levels[0].progress = data.data.Beginner;
-          levels[1].progress = data.data.Advanced;
-          levels[2].progress = data.data.Expert;
+          setProgress([
+            Math.round(Number(data.data.Beginner)),
+            Math.round(Number(data.data.Advanced)),
+            Math.round(Number(data.data.Expert)),
+          ]);
           setLoading(false);
         }
       });
@@ -124,7 +124,7 @@ const Homepage = () => {
       {/* End hero unit */}
       <Container maxWidth="md" component="main">
         <Grid container spacing={5} alignItems="flex-end">
-          {levels.map((level) => (
+          {levels.map((level, index) => (
             // Enterprise card is full width at sm breakpoint
             <Grid item key={level.title} xs={12} sm={6} md={4}>
               <Card>
@@ -139,7 +139,7 @@ const Homepage = () => {
                   <CardContent>
                     <div className={classes.progress}>
                       <Typography component="h2" variant="h3" color="secondary">
-                        {level.progress}%
+                        {progress[index]}%
                       </Typography>
                     </div>
                     <div className={classes.progress}>
