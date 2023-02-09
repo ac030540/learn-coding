@@ -15,3 +15,6 @@ Learn Coding is a platform to learn programming. Currently, we support Python & 
 5. NodeJS & Express: Backend server
 6. MongoDB: Database
 7. Vercel: UI & backend deployment
+
+## How can you contribute?
+Read the [Contributing Guidelines](https://github.com/ac030540/learn-coding/blob/main/CONTRIBUTING.md) to know how easy it is to contribute to this project.
