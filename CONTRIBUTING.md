@@ -6,7 +6,7 @@ Please follow this guide when logging issues or making code changes.
 ## Logging Issues
 
 All issues should be created using the [new GitHub Issue form](https://github.com/ac030540/learn-coding/issues/new?assignees=&labels=&template=issue_template.md&title=).  
-Use our [Issue Template](https://github.com/ac030540/learn-coding/blob/master/.github/ISSUE_TEMPLATE/issue_template.md).  
+Use our [Issue Templates](https://github.com/ac030540/learn-coding/blob/master/.github/ISSUE_TEMPLATE/).  
 Clearly describe the issue including steps to reproduce if there are any.
 Also, make sure to indicate the earliest version that has the issue being reported.
 
