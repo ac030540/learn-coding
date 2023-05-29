@@ -49,14 +49,19 @@ const Profile = () => {
   const { page: pageNumber } = queryString.parse(location.search);
   const auth = useStoreState((state) => state.auth);
   const [page, setPage] = useState(pageNumber ? Number(pageNumber) : 0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
   const [totalEntries, setTotalEntries] = useState(0);
 
   useEffect(() => {
     setLoading(true);
-    fetch(`${process.env.REACT_APP_SERVER_URL}/submission/user/${auth.email}/${rowsPerPage}`, {
-      method: 'GET',
-    })
+    fetch(
+      `${process.env.REACT_APP_SERVER_URL}/submission/user/${auth.email}/${rowsPerPage}?page=${
+        page + 1
+      }`,
+      {
+        method: 'GET',
+      }
+    )
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {

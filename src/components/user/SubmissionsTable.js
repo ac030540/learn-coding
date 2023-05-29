@@ -106,7 +106,7 @@ export default function SubmissionsTable({
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
+        rowsPerPageOptions={[5, 10, 15]}
         component="div"
         count={totalEntries} // total rows
         rowsPerPage={rowsPerPage} // limit
