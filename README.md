@@ -7,6 +7,10 @@ Learn Coding is a platform to learn programming. Currently, we support Python & 
 2. Focuses not just on programming skills but also on debugging skills: On every problem, students can enter into debugging mode which will load up a wrong answer to the problem which the student can fix and improve their debugging skills.
 3. Structured learning: The learning process is divided into 3 parts - Beginner, Advanced & Expert. Students can pick any level based on their current skills.
 
+## Want to try the website? Here are the test credentials:
+Email address: `ac030540@gmail.com`   
+Password: `abcd1234`
+
 ## Tech Stack:
 1. ReactJS: Building reusable UI components
 2. Material UI: Using google's material UI components to have a modern look & feel to the app
