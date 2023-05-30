@@ -19,7 +19,7 @@ const CodeDetails = ({
           variant="outlined"
           required
           value={subconcept.hint}
-          onChange={(event) => handleTextChange(event, 'hint')}
+          onChange={(event) => handleTextChange(event.target.value, 'hint')}
           fullWidth
           id="hint"
           label="Hint"

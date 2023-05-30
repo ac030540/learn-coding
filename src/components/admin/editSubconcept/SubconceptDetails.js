@@ -33,17 +33,10 @@ export default function ConceptDetails({
 }) {
   const classes = useStyles();
 
-  const handleEditorChange = (value, key) => {
+  const handleChange = (value, key) => {
     setSubconcept((prev) => ({
       ...prev,
       [key]: value,
-    }));
-  };
-
-  const handleTextChange = (event, key) => {
-    setSubconcept((prev) => ({
-      ...prev,
-      [key]: event.target.value,
     }));
   };
 
@@ -72,7 +65,7 @@ export default function ConceptDetails({
                 variant="outlined"
                 required
                 value={subconcept.title}
-                onChange={(event) => handleTextChange(event, 'title')}
+                onChange={(event) => handleChange(event.target.value, 'title')}
                 fullWidth
                 id="title"
                 label="Title"
@@ -83,21 +76,21 @@ export default function ConceptDetails({
             <Grid item xs={12}>
               <MarkdownEditor
                 value={subconcept.description}
-                setValue={(value) => handleEditorChange(value, 'description')}
+                setValue={(value) => handleChange(value, 'description')}
                 title="Description"
               />
             </Grid>
             <Grid item xs={12}>
               <MarkdownEditor
                 value={subconcept.story}
-                setValue={(value) => handleEditorChange(value, 'story')}
+                setValue={(value) => handleChange(value, 'story')}
                 title="Story"
               />
             </Grid>
             <Grid item xs={12}>
               <MarkdownEditor
                 value={subconcept.codingTemplate}
-                setValue={(value) => handleEditorChange(value, 'codingTemplate')}
+                setValue={(value) => handleChange(value, 'codingTemplate')}
                 title="Coding Template"
               />
             </Grid>
@@ -105,7 +98,7 @@ export default function ConceptDetails({
               <AutoComplete
                 title="References"
                 value={subconcept.referencesId}
-                setValue={(value) => handleEditorChange(value, 'referencesId')}
+                setValue={(value) => handleChange(value, 'referencesId')}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -117,7 +110,7 @@ export default function ConceptDetails({
                 label="Order"
                 name="order"
                 value={subconcept.order}
-                onChange={(event) => handleTextChange(event, 'order')}
+                onChange={(event) => handleChange(event.target.value, 'order')}
                 autoComplete="order"
               />
             </Grid>
@@ -128,7 +121,7 @@ export default function ConceptDetails({
                   labelId="demo-simple-select-outlined-label"
                   id="demo-simple-select-outlined"
                   value={subconcept.coding}
-                  onChange={(event) => handleTextChange(event, 'coding')}
+                  onChange={(event) => handleChange(event.target.value, 'coding')}
                   label="Coding"
                 >
                   <MenuItem value={true}>Yes</MenuItem>
@@ -140,10 +133,10 @@ export default function ConceptDetails({
               <CodeDetails
                 hideFileUpload={hideFileUpload}
                 subconcept={subconcept}
-                handleTextChange={handleTextChange}
-                handleInputFileChange={(value) => handleEditorChange(value, 'inputFile')}
-                handleOutputFileChange={(value) => handleEditorChange(value, 'outputFile')}
-                handleAnswerChange={(value) => handleEditorChange(value, 'answer')}
+                handleTextChange={handleChange}
+                handleInputFileChange={(value) => handleChange(value, 'inputFile')}
+                handleOutputFileChange={(value) => handleChange(value, 'outputFile')}
+                handleAnswerChange={(value) => handleChange(value, 'answer')}
               />
             )}
           </Grid>
