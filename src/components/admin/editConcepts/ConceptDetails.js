@@ -24,28 +24,10 @@ const useStyles = makeStyles((theme) => ({
 export default function ConceptDetails({ concept, setConcept }) {
   const classes = useStyles();
 
-  const handleCategoryChange = (event) => {
+  const handleChange = (value, key) => {
     setConcept((prev) => ({
       ...prev,
-      category: event.target.value,
-    }));
-  };
-  const handleOrderChange = (event) => {
-    setConcept((prev) => ({
-      ...prev,
-      order: event.target.value,
-    }));
-  };
-  const handleTitleChange = (event) => {
-    setConcept((prev) => ({
-      ...prev,
-      title: event.target.value,
-    }));
-  };
-  const handleChangeDescription = (value) => {
-    setConcept((prev) => ({
-      ...prev,
-      description: value,
+      [key]: value,
     }));
   };
 
@@ -58,7 +40,7 @@ export default function ConceptDetails({ concept, setConcept }) {
               variant="outlined"
               required
               value={concept.title}
-              onChange={handleTitleChange}
+              onChange={(e) => handleChange(e.target.value, 'title')}
               fullWidth
               id="title"
               label="Title"
@@ -69,7 +51,7 @@ export default function ConceptDetails({ concept, setConcept }) {
           <Grid item xs={12}>
             <MarkdownEditor
               value={concept.description}
-              setValue={handleChangeDescription}
+              setValue={(value) => handleChange(value, 'description')}
               title="Description"
             />
           </Grid>
@@ -80,7 +62,7 @@ export default function ConceptDetails({ concept, setConcept }) {
                 labelId="demo-simple-select-outlined-label"
                 id="demo-simple-select-outlined"
                 value={concept.category}
-                onChange={handleCategoryChange}
+                onChange={(e) => handleChange(e.target.value, 'category')}
                 label="Category"
               >
                 <MenuItem value="Beginner">Beginner</MenuItem>
@@ -98,7 +80,7 @@ export default function ConceptDetails({ concept, setConcept }) {
               label="Order"
               name="order"
               value={concept.order}
-              onChange={handleOrderChange}
+              onChange={(e) => handleChange(e.target.value, 'order')}
               autoComplete="order"
             />
           </Grid>
